@@ -1,7 +1,9 @@
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@gnoud-ui/react";
 import { CodeBlock } from "@/components/code-block";
 import { PageHeader } from "@/components/example";
+import { ExternalLink } from "@/components/external-link";
 import { Prose } from "@/components/prose";
+import { NPM_URL } from "@/lib/site";
 
 export const metadata = { title: "Getting started" };
 
@@ -40,6 +42,11 @@ export default function GettingStartedPage() {
             </TabsPanel>
           ))}
         </Tabs>
+
+        <p>
+          The package page on <ExternalLink href={NPM_URL}>npm</ExternalLink> shows the README, versions and
+          provenance exactly as users see them there.
+        </p>
 
         <h2>Import the styles</h2>
         <p>

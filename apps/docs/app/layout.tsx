@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Familjen_Grotesk, Geist_Mono, Hanken_Grotesk } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
-import { REPO_URL, SITE_URL } from "@/lib/site";
+import { ExternalLink } from "@/components/external-link";
+import { NPM_URL, REPO_URL, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const display = Familjen_Grotesk({
@@ -58,9 +59,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             style={{ borderTop: "1px solid var(--gu-line)" }}
           >
             gnoud-ui · MIT · Built with Next.js and Base UI ·{" "}
-            <a href={REPO_URL} rel="noopener noreferrer" className="underline underline-offset-4">
+            <ExternalLink href={REPO_URL} className="underline underline-offset-4">
               GitHub
-            </a>
+            </ExternalLink>{" "}
+            ·{" "}
+            <ExternalLink href={NPM_URL} className="underline underline-offset-4">
+              npm
+            </ExternalLink>
           </p>
         </footer>
       </body>

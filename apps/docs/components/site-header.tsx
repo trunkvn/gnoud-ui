@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { REPO_URL } from "@/lib/site";
+import { NPM_URL, REPO_URL } from "@/lib/site";
+import { ExternalLink } from "./external-link";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -28,9 +29,12 @@ export function SiteHeader() {
             <Link href="/docs/components/button" className="hover:underline">
               Components
             </Link>
-            <a href={REPO_URL} className="hover:underline" rel="noopener noreferrer">
-              GitHub ↗
-            </a>
+            <ExternalLink href={REPO_URL} className="hidden hover:underline lg:inline">
+              GitHub
+            </ExternalLink>
+            <ExternalLink href={NPM_URL} className="hidden hover:underline lg:inline">
+              npm
+            </ExternalLink>
           </nav>
         </div>
         <div className="flex items-center gap-2">

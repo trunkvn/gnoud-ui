@@ -56,3 +56,50 @@ test.describe("sharing metadata", () => {
     expect(png.readUInt32BE(20)).toBe(630); // height
   });
 });
+
+test.describe("links to GitHub and npm", () => {
+  const GITHUB = "https://github.com/trunkvn/gnoud-ui";
+  const NPM = "https://www.npmjs.com/package/@gnoud-ui/react?activeTab=readme";
+
+  test("the header (desktop), footer, home and Getting started link out safely", async ({ page }) => {
+    await page.goto("/");
+    const header = page.locator("header");
+    await expect(header.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", GITHUB);
+    await expect(header.getByRole("link", { name: "npm" })).toHaveAttribute("href", NPM);
+    await expect(header.getByRole("link", { name: "npm" })).toHaveAttribute("rel", /noopener/);
+    await expect(page.locator("footer").getByRole("link", { name: "npm" })).toHaveAttribute("href", NPM);
+    await expect(page.getByRole("main").getByRole("link", { name: "npm" })).toHaveAttribute("href", NPM);
+
+    await page.goto("/docs/getting-started");
+    await expect(page.getByRole("main").getByRole("link", { name: "npm" })).toHaveAttribute("href", NPM);
+  });
+
+  test("the decorative arrow is not part of the link's accessible name", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("header").getByRole("link", { name: "npm", exact: true })).toBeVisible();
+  });
+
+  test("below lg the links live in the menu", async ({ page }) => {
+    await page.setViewportSize({ width: 800, height: 900 });
+    await page.goto("/");
+    await expect(page.locator("header").getByRole("link", { name: "npm" })).toBeHidden();
+    await page.locator("details.mobile-nav summary").click();
+    const menu = page.locator(".mobile-nav__panel");
+    await expect(menu.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", GITHUB);
+    await expect(menu.getByRole("link", { name: "npm" })).toHaveAttribute("href", NPM);
+  });
+});
+
+test.describe("header at in-between widths", () => {
+  for (const width of [640, 768, 1000, 1024, 1280]) {
+    test(`${width}px: nothing overflows and the menu button stays on screen`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/docs/getting-started");
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+      const header = await page.locator("header > div").boundingBox();
+      const toggle = await page.getByRole("group", { name: "Colour theme" }).first().boundingBox();
+      expect(toggle!.x + toggle!.width).toBeLessThanOrEqual(width);
+      expect(header!.width).toBeLessThanOrEqual(width);
+    });
+  }
+});

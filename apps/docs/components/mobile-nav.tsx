@@ -2,7 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { DocsNav } from "./docs-nav";
-import { REPO_URL } from "@/lib/site";
+import { NPM_URL, REPO_URL } from "@/lib/site";
+import { ExternalLink } from "./external-link";
 import { ThemeToggle } from "./theme-toggle";
 
 /**
@@ -18,9 +19,23 @@ export function MobileNav() {
       <div className="mobile-nav__panel">
         <DocsNav />
         {/* the header has no room for this on a phone */}
-        <a href={REPO_URL} className="nav-link mt-6 sm:hidden" rel="noopener noreferrer">
-          GitHub ↗
-        </a>
+        <div className="mt-6">
+          <p className="mb-2 pl-[calc(0.75rem+2px)] font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+            Elsewhere
+          </p>
+          <ul className="grid gap-0.5">
+            <li>
+              <ExternalLink href={REPO_URL} className="nav-link">
+                GitHub
+              </ExternalLink>
+            </li>
+            <li>
+              <ExternalLink href={NPM_URL} className="nav-link">
+                npm
+              </ExternalLink>
+            </li>
+          </ul>
+        </div>
         <div className="mt-8 sm:hidden">
           <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Theme</p>
           <ThemeToggle />

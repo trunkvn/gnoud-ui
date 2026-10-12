@@ -16,7 +16,9 @@ import {
 } from "@gnoud-ui/react";
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
+import { ExternalLink } from "@/components/external-link";
 import { Label } from "@/components/example";
+import { NPM_URL } from "@/lib/site";
 
 const principles = [
   {
@@ -62,6 +64,13 @@ export default function Home() {
           </div>
           <div className="mt-10 max-w-md">
             <CodeBlock lang="bash" code="npm install @gnoud-ui/react" filename="terminal" />
+            <p className="mt-3 text-sm text-muted">
+              Or see the package as published on{" "}
+              <ExternalLink href={NPM_URL} className="underline underline-offset-4">
+                npm
+              </ExternalLink>
+              .
+            </p>
           </div>
         </div>
 
