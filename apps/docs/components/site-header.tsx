@@ -1,8 +1,7 @@
 import Link from "next/link";
+import { REPO_URL } from "@/lib/site";
 import { MobileNav } from "./mobile-nav";
 import { ThemeToggle } from "./theme-toggle";
-
-export const REPO_URL = "https://github.com/trunkvn/gnoud-ui";
 
 export function Logo() {
   return (

@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { DocsNav } from "./docs-nav";
-import { REPO_URL } from "./site-header";
+import { REPO_URL } from "@/lib/site";
 import { ThemeToggle } from "./theme-toggle";
 
 /**

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Familjen_Grotesk, Geist_Mono, Hanken_Grotesk } from "next/font/google";
-import { REPO_URL, SiteHeader } from "@/components/site-header";
+import { SiteHeader } from "@/components/site-header";
+import { REPO_URL, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const display = Familjen_Grotesk({
@@ -19,9 +20,14 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: "gnoud-ui", template: "%s · gnoud-ui" },
   description:
     "A small React component library with a paper-and-ink identity: hard shadows, ruled borders, warm paper, accessible by default.",
+  // Each page names itself as canonical; resolved against metadataBase.
+  alternates: { canonical: "./" },
+  openGraph: { type: "website", siteName: "gnoud-ui" },
+  twitter: { card: "summary_large_image" },
 };
 
 // Runs before first paint so a saved light/dark choice never flashes the wrong theme.
