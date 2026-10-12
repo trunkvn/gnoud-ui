@@ -1,0 +1,56 @@
+@layer gnoud-ui {
+  /* Fields are flat and sit in the page; only things you can press are raised. */
+  .gu-input {
+    --gu-input-height: 2.5rem;
+    --gu-input-border: var(--gu-border);
+
+    box-sizing: border-box;
+    width: 100%;
+    min-height: var(--gu-input-height);
+    padding: 0 var(--gu-space-4);
+
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-md);
+    line-height: 1.25;
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-input-border);
+    border-radius: var(--gu-radius-sm);
+
+    transition: background-color var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+
+  .gu-input[data-size="sm"] {
+    --gu-input-height: 2rem;
+    padding: 0 var(--gu-space-3);
+    font-size: var(--gu-text-sm);
+  }
+  .gu-input[data-size="lg"] {
+    --gu-input-height: 3rem;
+    padding: 0 var(--gu-space-5);
+  }
+
+  .gu-input::placeholder {
+    color: var(--gu-ink-muted);
+    opacity: 1;
+  }
+
+  .gu-input:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  .gu-input[data-invalid] {
+    --gu-input-border: var(--gu-danger);
+  }
+  .gu-input[data-invalid]:focus-visible {
+    outline-color: var(--gu-danger);
+  }
+
+  .gu-input:disabled {
+    color: var(--gu-ink-muted);
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+}
