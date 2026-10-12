@@ -1,0 +1,57 @@
+@layer gnoud-ui {
+  .gu-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gu-space-4);
+    padding: var(--gu-space-5);
+
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-md);
+    box-shadow: var(--gu-shadow-md);
+  }
+  .gu-card[data-variant="flat"] {
+    border: var(--gu-line-width) solid var(--gu-line);
+    box-shadow: none;
+  }
+
+  .gu-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gu-space-1);
+  }
+  .gu-card__label {
+    margin: 0;
+    font-family: var(--gu-font-mono);
+    font-size: var(--gu-text-xs);
+    letter-spacing: var(--gu-tracking-label);
+    text-transform: uppercase;
+    color: var(--gu-ink-muted);
+  }
+  .gu-card__title {
+    margin: 0;
+    font-family: var(--gu-font-display);
+    font-size: var(--gu-text-lg);
+    font-weight: var(--gu-weight-bold);
+    line-height: var(--gu-leading-snug);
+    letter-spacing: var(--gu-tracking-display);
+  }
+  .gu-card__description {
+    margin: 0;
+    font-size: var(--gu-text-sm);
+    line-height: var(--gu-leading-normal);
+    color: var(--gu-ink-muted);
+  }
+  .gu-card__content {
+    line-height: var(--gu-leading-normal);
+  }
+  .gu-card__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gu-space-3);
+  }
+}

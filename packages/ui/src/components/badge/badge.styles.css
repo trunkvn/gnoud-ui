@@ -1,0 +1,43 @@
+@layer gnoud-ui {
+  .gu-badge {
+    --gu-badge-ink: var(--gu-ink);
+    --gu-badge-bg: transparent;
+    --gu-badge-border: var(--gu-ink);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gu-space-1);
+    padding: var(--gu-space-1) var(--gu-space-2);
+
+    font-family: var(--gu-font-mono);
+    font-size: var(--gu-text-xs);
+    line-height: 1.2;
+    letter-spacing: var(--gu-tracking-label);
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    color: var(--gu-badge-ink);
+    background: var(--gu-badge-bg);
+    border: var(--gu-line-width) solid var(--gu-badge-border);
+    border-radius: var(--gu-radius-sm);
+  }
+
+  .gu-badge[data-variant="accent"] {
+    --gu-badge-ink: var(--gu-accent-ink);
+    --gu-badge-bg: var(--gu-accent);
+    --gu-badge-border: var(--gu-accent);
+  }
+  .gu-badge[data-variant="highlight"] {
+    --gu-badge-ink: var(--gu-accent-2-ink);
+    --gu-badge-bg: var(--gu-accent-2);
+    --gu-badge-border: var(--gu-accent-2);
+  }
+  .gu-badge[data-variant="success"] {
+    --gu-badge-ink: var(--gu-success);
+    --gu-badge-border: var(--gu-success);
+  }
+  .gu-badge[data-variant="danger"] {
+    --gu-badge-ink: var(--gu-danger);
+    --gu-badge-border: var(--gu-danger);
+  }
+}

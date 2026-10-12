@@ -1,0 +1,40 @@
+@layer gnoud-ui {
+  /* A margin note: a thick coloured rule on the left, the words carry the meaning. */
+  .gu-alert {
+    --gu-alert-rule: var(--gu-accent);
+
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gu-space-1);
+    padding: var(--gu-space-4) var(--gu-space-5);
+
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-line-width) solid var(--gu-line);
+    border-left: 4px solid var(--gu-alert-rule);
+    border-radius: var(--gu-radius-sm);
+  }
+
+  .gu-alert[data-variant="success"] {
+    --gu-alert-rule: var(--gu-success);
+  }
+  .gu-alert[data-variant="warning"] {
+    --gu-alert-rule: var(--gu-accent-2);
+  }
+  .gu-alert[data-variant="danger"] {
+    --gu-alert-rule: var(--gu-danger);
+  }
+
+  .gu-alert__title {
+    margin: 0;
+    font-weight: var(--gu-weight-medium);
+    line-height: var(--gu-leading-snug);
+  }
+  .gu-alert__description {
+    font-size: var(--gu-text-sm);
+    line-height: var(--gu-leading-normal);
+    color: var(--gu-ink-muted);
+  }
+}
