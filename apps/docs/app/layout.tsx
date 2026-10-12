@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Familjen_Grotesk, Geist_Mono, Hanken_Grotesk } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { ExternalLink } from "@/components/external-link";
-import { NPM_URL, REPO_URL, SITE_URL } from "@/lib/site";
+import { OG_SIZE } from "@/lib/metadata";
+import { AUTHOR, NPM_URL, REPO_URL, SITE_DESCRIPTION, SITE_NAME, SITE_URL, THEME_COLORS } from "@/lib/site";
 import "./globals.css";
 
 const display = Familjen_Grotesk({
@@ -22,13 +23,52 @@ const mono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: "gnoud-ui", template: "%s · gnoud-ui" },
-  description:
-    "A small React component library with a paper-and-ink identity: hard shadows, ruled borders, warm paper, accessible by default.",
-  // Each page names itself as canonical; resolved against metadataBase.
+  title: { default: SITE_NAME, template: `%s · ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [AUTHOR],
+  creator: AUTHOR.name,
+  publisher: AUTHOR.name,
+  category: "technology",
+  keywords: [
+    "react",
+    "component library",
+    "ui kit",
+    "design system",
+    "accessible components",
+    "a11y",
+    "base ui",
+    "dark mode",
+    "css variables",
+    "tailwind",
+    "typescript",
+    "next.js",
+  ],
+  // Each page names itself as canonical; pages override this with their own path.
   alternates: { canonical: "./" },
-  openGraph: { type: "website", siteName: "gnoud-ui" },
-  twitter: { card: "summary_large_image" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  formatDetection: { telephone: false, email: false, address: false },
+  icons: { icon: "/icon.svg", apple: "/apple-icon" },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    locale: "en_US",
+    images: [{ url: "/og", ...OG_SIZE, alt: "gnoud-ui: interfaces that feel printed" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/og"] },
+};
+
+export const viewport: Viewport = {
+  // The address bar follows the OS theme. Pages can still be forced light or dark in-page.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: THEME_COLORS.light },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLORS.dark },
+  ],
+  colorScheme: "light dark",
 };
 
 // Runs before first paint so a saved light/dark choice never flashes the wrong theme.
