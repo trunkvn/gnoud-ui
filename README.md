@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# gnoud-ui
 
-## Getting Started
+A React component library with a paper-and-ink design language, built as a monorepo: the
+publishable package and the documentation site that is also its test bench.
 
-First, run the development server:
+| Path | What it is |
+|---|---|
+| [`packages/ui`](packages/ui) | `@gnoud-ui/react`: the npm package (12 components, design tokens, one stylesheet) |
+| [`apps/docs`](apps/docs) | The docs site (Next.js): guides, a page per component, a token reference |
+
+See the [package README](packages/ui/README.md) for installation and usage.
+
+## Design
+
+Warm paper, near-black ink, one indigo accent. Things you can press are raised with a hard offset
+shadow and sink into the page when pressed; fields and text stay flat. No blur anywhere. The
+rules live in the design tokens, so changing them changes the whole system.
+
+## Develop
+
+Requires Node 22.18+ or 24.11+ (see `.nvmrc`).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # library in watch mode + docs at http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+npm run typecheck  # all packages
+npm run lint
+npm run test       # unit and accessibility tests (Vitest, jsdom, axe)
+npm run build      # builds the package (with publint and attw checks), then the docs
+npm run e2e        # real-browser tests (Playwright); builds first
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Each component lives in `packages/ui/src/components/<name>/`: a `.tsx`, a `<name>.styles.css`
+(name it `.styles.css`, not `.css`, or the build renames the output), and a test. Export it from
+`packages/ui/src/index.ts` and add a docs page under `apps/docs/app/docs/components/`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Release
 
-## Learn More
+Releases use [Changesets](https://github.com/changesets/changesets).
 
-To learn more about Next.js, take a look at the following resources:
+1. Make your change and run `npm run changeset`; commit the generated file.
+2. When it lands on `main`, the **Release** workflow opens a "Version Packages" pull request.
+3. Merging that pull request publishes `@gnoud-ui/react` to npm.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Publishing needs an `NPM_TOKEN` repository secret (see the workflow for details).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © gnoud
