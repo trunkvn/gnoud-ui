@@ -1,0 +1,172 @@
+/*
+ * gnoud-ui design tokens
+ *
+ * Identity: "Giấy & Mực" (paper & ink). Warm paper, near-black ink, one indigo accent,
+ * hard offset shadows like a misregistered woodblock print. Flat colour, no blur.
+ *
+ * Theming: light by default, follows the OS, and can be forced with
+ * data-theme="light" | "dark" on any ancestor (usually <html>).
+ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* colour: surfaces */
+  --gu-bg: #f3eee3;
+  --gu-surface: #fbf8f1;
+  --gu-tint: #e9e1cf;
+
+  /* colour: text and lines */
+  --gu-ink: #18150f;
+  --gu-ink-muted: #625c4f;
+  --gu-line: #d8cfbb; /* decorative dividers only; use --gu-border for control edges */
+
+  /* colour: brand */
+  --gu-accent: #2b3f8f;
+  --gu-accent-ink: #fbf8f1;
+  --gu-accent-2: #c98a1b;
+  --gu-accent-2-ink: #18150f;
+
+  /* colour: status */
+  --gu-danger: #a8321f;
+  --gu-success: #2f6b3a;
+
+  /* the veil behind dialogs */
+  --gu-scrim: rgb(24 21 15 / 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --gu-bg: #14110c;
+    --gu-surface: #1e1a13;
+    --gu-tint: #2a251b;
+
+    --gu-ink: #f1ebdc;
+    --gu-ink-muted: #a59d8a;
+    --gu-line: #3c3628;
+
+    --gu-accent: #8c9eea;
+    --gu-accent-ink: #14110c;
+    --gu-accent-2: #e0a53a;
+    --gu-accent-2-ink: #14110c;
+
+    --gu-danger: #f08a74;
+    --gu-success: #7fc08a;
+
+    --gu-scrim: rgb(0 0 0 / 0.65);
+  }
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --gu-bg: #14110c;
+  --gu-surface: #1e1a13;
+  --gu-tint: #2a251b;
+
+  --gu-ink: #f1ebdc;
+  --gu-ink-muted: #a59d8a;
+  --gu-line: #3c3628;
+
+  --gu-accent: #8c9eea;
+  --gu-accent-ink: #14110c;
+  --gu-accent-2: #e0a53a;
+  --gu-accent-2-ink: #14110c;
+
+  --gu-danger: #f08a74;
+  --gu-success: #7fc08a;
+
+  --gu-scrim: rgb(0 0 0 / 0.65);
+}
+
+/*
+ * Derived tokens reference theme colours, so they must be re-evaluated in every themed
+ * scope. A var() inside a custom property resolves where it is declared; declaring these
+ * on :root only would freeze them to the light theme inside a nested data-theme="dark".
+ */
+:root,
+[data-theme] {
+  --gu-border: var(--gu-ink);
+  --gu-focus-ring: var(--gu-accent);
+
+  /* print shadows: hard, offset, no blur. Controls lift on hover and sink on press. */
+  --gu-shadow-color: var(--gu-ink);
+  --gu-shadow-sm: 2px 2px 0 var(--gu-shadow-color);
+  --gu-shadow-md: 3px 3px 0 var(--gu-shadow-color);
+  --gu-shadow-lg: 5px 5px 0 var(--gu-shadow-color);
+  --gu-shadow-pressed: 1px 1px 0 var(--gu-shadow-color);
+}
+
+/* Theme-independent tokens */
+:root {
+  /* typography: families. Load the fonts yourself (all three cover Vietnamese);
+     the fallbacks keep the layout sane. */
+  --gu-font-display: "Familjen Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gu-font-body: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gu-font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* typography: scale (major third, 1.25) */
+  --gu-text-xs: 0.75rem;
+  --gu-text-sm: 0.875rem;
+  --gu-text-md: 1rem;
+  --gu-text-lg: 1.25rem;
+  --gu-text-xl: 1.5625rem;
+  --gu-text-2xl: 1.9375rem;
+  --gu-text-3xl: 2.4375rem;
+  --gu-text-4xl: 3.0625rem;
+
+  --gu-leading-tight: 1.05;
+  --gu-leading-snug: 1.3;
+  --gu-leading-normal: 1.6;
+
+  --gu-weight-regular: 400;
+  --gu-weight-medium: 500;
+  --gu-weight-bold: 700;
+
+  --gu-tracking-display: -0.03em;
+  --gu-tracking-label: 0.2em; /* small uppercase labels, section numbers */
+
+  /* space (4px base) */
+  --gu-space-1: 0.25rem;
+  --gu-space-2: 0.5rem;
+  --gu-space-3: 0.75rem;
+  --gu-space-4: 1rem;
+  --gu-space-5: 1.5rem;
+  --gu-space-6: 2rem;
+  --gu-space-7: 3rem;
+  --gu-space-8: 4rem;
+
+  /* shape */
+  --gu-radius-sm: 2px; /* controls: the signature, near-square corners */
+  --gu-radius-md: 4px; /* panels, dialogs */
+  --gu-radius-lg: 8px;
+  --gu-radius-full: 999px;
+
+  --gu-border-width: 1.5px;
+  --gu-line-width: 1px;
+
+  /* motion */
+  --gu-duration-fast: 120ms;
+  --gu-duration-base: 200ms;
+  --gu-duration-slow: 360ms;
+  --gu-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --gu-ease-stamp: cubic-bezier(0.3, 1.4, 0.5, 1); /* slight overshoot, like a stamp landing */
+
+  /* stacking for portalled layers (dialogs, popups) */
+  --gu-z-overlay: 50;
+  --gu-z-popup: 60;
+
+  --gu-focus-width: 2px;
+  --gu-focus-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --gu-duration-fast: 0ms;
+    --gu-duration-base: 0ms;
+    --gu-duration-slow: 0ms;
+  }
+}

@@ -1,0 +1,7 @@
+/*
+ * Everything gnoud-ui ships lives in one cascade layer, so your own CSS (including
+ * Tailwind utilities) can override it without !important or specificity fights.
+ * Declared first so the layer exists before anything is added to it.
+ */
+@layer gnoud-ui;
+@import "./tokens.css" layer(gnoud-ui);
