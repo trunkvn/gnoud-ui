@@ -1,7 +1,8 @@
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Tabs" };
+export const metadata = pageMetadata("/docs/components/tabs");
 
 const rows = [
   ["Tabs defaultValue / value", "string", "-", "Which tab is selected. Controlled with value + onValueChange."],
@@ -15,7 +16,7 @@ const rows = [
 export default function TabsPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 06" title="Tabs">
+      <PageHeader href="/docs/components/tabs" eyebrow="Component · 06" title="Tabs">
         Built on Base UI for roving focus, arrow-key navigation and the right ARIA roles. The
         selected tab is inked in, like a pressed block.
       </PageHeader>

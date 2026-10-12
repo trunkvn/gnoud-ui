@@ -18,7 +18,8 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
 import { ExternalLink } from "@/components/external-link";
 import { Label } from "@/components/example";
-import { NPM_URL } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
+import { AUTHOR, NPM_URL, REPO_URL, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const principles = [
   {
@@ -41,6 +42,26 @@ const principles = [
 export default function Home() {
   return (
     <main id="main" className="mx-auto max-w-6xl px-5">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            { "@type": "WebSite", name: SITE_NAME, url: SITE_URL, description: SITE_DESCRIPTION, inLanguage: "en" },
+            {
+              "@type": "SoftwareSourceCode",
+              name: "@gnoud-ui/react",
+              description: SITE_DESCRIPTION,
+              url: SITE_URL,
+              codeRepository: REPO_URL,
+              programmingLanguage: "TypeScript",
+              runtimePlatform: "React 19",
+              license: "https://opensource.org/licenses/MIT",
+              author: { "@type": "Person", name: AUTHOR.name, url: AUTHOR.url },
+              sameAs: [NPM_URL, REPO_URL],
+            },
+          ],
+        }}
+      />
       <section className="grid items-center gap-14 py-16 lg:grid-cols-[1.1fr_1fr] lg:py-24">
         <div>
           <Label>React · Paper &amp; ink</Label>

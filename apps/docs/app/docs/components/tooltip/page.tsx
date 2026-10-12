@@ -1,7 +1,8 @@
 import { Button, Tooltip, TooltipProvider } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Tooltip" };
+export const metadata = pageMetadata("/docs/components/tooltip");
 
 const rows = [
   ["content", "ReactNode", "required", "The text shown. Keep it short."],
@@ -17,7 +18,7 @@ const rows = [
 export default function TooltipPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 10" title="Tooltip">
+      <PageHeader href="/docs/components/tooltip" eyebrow="Component · 10" title="Tooltip">
         A short hint, inked in: the inverse of the page. Opens on hover and on keyboard focus,
         closes with Escape. Built on Base UI.
       </PageHeader>

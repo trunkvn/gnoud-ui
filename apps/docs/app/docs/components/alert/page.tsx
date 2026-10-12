@@ -1,7 +1,8 @@
 import { Alert, AlertDescription, AlertTitle } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Alert" };
+export const metadata = pageMetadata("/docs/components/alert");
 
 const rows = [
   ["variant", '"info" | "success" | "warning" | "danger"', '"info"', "The coloured rule. The title and text must carry the meaning, not the colour."],
@@ -11,7 +12,7 @@ const rows = [
 export default function AlertPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 08" title="Alert">
+      <PageHeader href="/docs/components/alert" eyebrow="Component · 08" title="Alert">
         An inline message set like a margin note: a thick coloured rule on the left, and words
         that say what happened.
       </PageHeader>

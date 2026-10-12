@@ -1,7 +1,8 @@
 import { Textarea } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Textarea" };
+export const metadata = pageMetadata("/docs/components/textarea");
 
 const rows = [
   ["invalid", "boolean", "false", "Red border and aria-invalid. Pair it with a visible message."],
@@ -11,7 +12,7 @@ const rows = [
 export default function TextareaPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 07" title="Textarea">
+      <PageHeader href="/docs/components/textarea" eyebrow="Component · 07" title="Textarea">
         The multi-line sibling of Input: flat, ruled, and a plain textarea underneath.
       </PageHeader>
 

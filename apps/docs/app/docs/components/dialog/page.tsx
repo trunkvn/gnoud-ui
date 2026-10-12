@@ -11,8 +11,9 @@ import {
   Input,
 } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Dialog" };
+export const metadata = pageMetadata("/docs/components/dialog");
 
 const rows = [
   ["Dialog open / defaultOpen / onOpenChange", "-", "closed", "Open it uncontrolled, or control it from state."],
@@ -28,7 +29,7 @@ const rows = [
 export default function DialogPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 11" title="Dialog">
+      <PageHeader href="/docs/components/dialog" eyebrow="Component · 11" title="Dialog">
         A modal panel on a flat veil, with a hard shadow and a stamp-like drop in. Built on Base
         UI, so focus is trapped, Escape closes it, and focus returns to the trigger.
       </PageHeader>

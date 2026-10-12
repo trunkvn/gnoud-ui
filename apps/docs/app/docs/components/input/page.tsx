@@ -1,7 +1,8 @@
 import { Input } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Input" };
+export const metadata = pageMetadata("/docs/components/input");
 
 const rows = [
   ["size", '"sm" | "md" | "lg"', '"md"', "Height and padding. Named size, so it does not collide with the native size attribute."],
@@ -28,7 +29,7 @@ function Field({ label, hint, hintId, children }: { label: string; hint?: string
 export default function InputPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 02" title="Input">
+      <PageHeader href="/docs/components/input" eyebrow="Component · 02" title="Input">
         A flat, ruled field. Only things you can press are raised; things you write into sit in the
         page. A plain input element underneath, so autofill, forms and mobile keyboards just work.
       </PageHeader>

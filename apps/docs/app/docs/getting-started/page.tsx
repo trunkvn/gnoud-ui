@@ -4,8 +4,9 @@ import { PageHeader } from "@/components/example";
 import { ExternalLink } from "@/components/external-link";
 import { Prose } from "@/components/prose";
 import { NPM_URL } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Getting started" };
+export const metadata = pageMetadata("/docs/getting-started");
 
 const managers = [
   ["npm", "npm install @gnoud-ui/react"],
@@ -17,7 +18,7 @@ const managers = [
 export default function GettingStartedPage() {
   return (
     <>
-      <PageHeader eyebrow="Guide" title="Getting started">
+      <PageHeader href="/docs/getting-started" eyebrow="Guide" title="Getting started">
         Install the package, import one stylesheet, and use components. It works with any bundler
         that handles CSS imports, and with Server Components.
       </PageHeader>

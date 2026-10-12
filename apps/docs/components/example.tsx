@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
+import { findPage } from "@/lib/nav";
+import { ogImagePath } from "@/lib/metadata";
+import { AUTHOR, REPO_URL, SITE_NAME, SITE_URL } from "@/lib/site";
 import { CodeBlock } from "./code-block";
+import { JsonLd } from "./json-ld";
 
 export function Label({ children }: { children: ReactNode }) {
   return (
@@ -37,16 +41,47 @@ export async function Example({
 }
 
 export function PageHeader({
+  href,
   eyebrow,
   title,
   children,
 }: {
+  /** The page's path, as listed in lib/nav.ts. */
+  href: string;
   eyebrow: string;
   title: string;
   children: ReactNode;
 }) {
+  const page = findPage(href);
+  if (!page) throw new Error(`PageHeader: "${href}" is not in lib/nav.ts`);
+
   return (
     <header className="mb-12">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: SITE_NAME, item: SITE_URL },
+                { "@type": "ListItem", position: 2, name: page.title, item: `${SITE_URL}${href}` },
+              ],
+            },
+            {
+              "@type": "TechArticle",
+              headline: page.title,
+              description: page.description,
+              url: `${SITE_URL}${href}`,
+              image: `${SITE_URL}${ogImagePath(href)}`,
+              inLanguage: "en",
+              author: { "@type": "Person", name: AUTHOR.name, url: AUTHOR.url },
+              isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
+              about: { "@type": "SoftwareSourceCode", name: "@gnoud-ui/react", codeRepository: REPO_URL },
+            },
+          ],
+        }}
+      />
       <Label>{eyebrow}</Label>
       <h1
         className="font-display text-5xl font-bold"

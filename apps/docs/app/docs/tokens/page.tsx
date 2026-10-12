@@ -1,15 +1,16 @@
 import { PageHeader } from "@/components/example";
 import { ThemePanel } from "@/components/theme-panel";
 import { readTokens } from "@/lib/tokens";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Design tokens" };
+export const metadata = pageMetadata("/docs/tokens");
 
 export default function TokensPage() {
   const groups = readTokens();
 
   return (
     <>
-      <PageHeader eyebrow="Guide" title="Design tokens">
+      <PageHeader href="/docs/tokens" eyebrow="Guide" title="Design tokens">
         The raw material of the system, rendered from the same stylesheet you install. The
         reference below is generated from the library&apos;s <span className="font-mono">tokens.css</span>{" "}
         at build time, so it cannot drift.

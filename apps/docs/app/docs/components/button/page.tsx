@@ -1,7 +1,8 @@
 import { Button } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Button" };
+export const metadata = pageMetadata("/docs/components/button");
 
 const props = [
   ["variant", '"primary" | "secondary" | "ghost"', '"secondary"', "Visual weight. Use one primary per screen."],
@@ -23,7 +24,7 @@ function Arrow() {
 export default function ButtonPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 01" title="Button">
+      <PageHeader href="/docs/components/button" eyebrow="Component · 01" title="Button">
         Lifts off the page on hover and presses into it on click, like a stamp. Built on a native
         button, so keyboard and screen reader behaviour comes for free.
       </PageHeader>

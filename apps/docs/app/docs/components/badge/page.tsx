@@ -1,7 +1,8 @@
 import { Badge } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Badge" };
+export const metadata = pageMetadata("/docs/components/badge");
 
 const rows = [
   ["variant", '"neutral" | "accent" | "highlight" | "success" | "danger"', '"neutral"', "Meaning, not decoration. Neutral for plain tags, success and danger for status."],
@@ -10,7 +11,7 @@ const rows = [
 export default function BadgePage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 03" title="Badge">
+      <PageHeader href="/docs/components/badge" eyebrow="Component · 03" title="Badge">
         A small stamped label in the same tracked uppercase as every eyebrow in the system. Static
         text, not interactive.
       </PageHeader>

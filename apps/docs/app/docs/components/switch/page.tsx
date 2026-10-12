@@ -1,7 +1,8 @@
 import { Switch } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Switch" };
+export const metadata = pageMetadata("/docs/components/switch");
 
 const rows = [
   ["label", "ReactNode", "-", "Wraps the switch in a <label> so the text toggles it and names it. Without it, pass aria-label."],
@@ -15,7 +16,7 @@ const rows = [
 export default function SwitchPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 09" title="Switch">
+      <PageHeader href="/docs/components/switch" eyebrow="Component · 09" title="Switch">
         For settings that take effect immediately. Built on Base UI; a square block of ink slides
         across the track. It sinks into the page when pressed, like the checkbox.
       </PageHeader>

@@ -12,8 +12,9 @@ import {
   Input,
 } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Card" };
+export const metadata = pageMetadata("/docs/components/card");
 
 const rows = [
   ["variant", '"raised" | "flat"', '"raised"', "Raised has the print shadow; flat is a quiet hairline box for dense layouts."],
@@ -23,7 +24,7 @@ const rows = [
 export default function CardPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 04" title="Card">
+      <PageHeader href="/docs/components/card" eyebrow="Component · 04" title="Card">
         A printed panel. Built from small parts (header, label, title, description, content,
         footer) so you only use what you need.
       </PageHeader>

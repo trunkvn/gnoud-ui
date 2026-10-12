@@ -1,7 +1,8 @@
 import { Checkbox } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Checkbox" };
+export const metadata = pageMetadata("/docs/components/checkbox");
 
 const rows = [
   ["label", "ReactNode", "-", "Wraps the box in a <label> so the text toggles it and names it. Without it, pass aria-label."],
@@ -16,7 +17,7 @@ const rows = [
 export default function CheckboxPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 05" title="Checkbox">
+      <PageHeader href="/docs/components/checkbox" eyebrow="Component · 05" title="Checkbox">
         Built on Base UI for correct keyboard, mixed-state and form behaviour, drawn in the same
         stamped style. It presses into the page when you click it.
       </PageHeader>

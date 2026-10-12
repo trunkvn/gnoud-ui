@@ -1,13 +1,14 @@
 import { CodeBlock } from "@/components/code-block";
 import { PageHeader } from "@/components/example";
 import { Prose } from "@/components/prose";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Theming" };
+export const metadata = pageMetadata("/docs/theming");
 
 export default function ThemingPage() {
   return (
     <>
-      <PageHeader eyebrow="Guide" title="Theming">
+      <PageHeader href="/docs/theming" eyebrow="Guide" title="Theming">
         Everything visual is a CSS custom property prefixed <code>--gu-</code>. There is no
         JavaScript theme provider and no runtime styling.
       </PageHeader>

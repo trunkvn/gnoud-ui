@@ -1,6 +1,8 @@
 export interface NavItem {
   title: string;
   href: string;
+  /** One sentence, written for search results and link previews (about 100-160 characters). */
+  description: string;
 }
 
 export interface NavSection {
@@ -13,28 +15,52 @@ export const nav: NavSection[] = [
   {
     title: "Guide",
     items: [
-      { title: "Getting started", href: "/docs/getting-started" },
-      { title: "Theming", href: "/docs/theming" },
-      { title: "Design tokens", href: "/docs/tokens" },
+      { title: "Getting started", href: "/docs/getting-started", description:
+        "Install @gnoud-ui/react, import one stylesheet and use accessible components in Next.js, Vite or any React 19 app. Works with Tailwind and Server Components." },
+      { title: "Theming", href: "/docs/theming", description:
+        "Customise gnoud-ui with CSS variables: light and dark themes, brand colours, radii, shadows and per-component overrides, with no theme provider." },
+      { title: "Design tokens", href: "/docs/tokens", description:
+        "The design token reference: light and dark colours, type scale, spacing, shape, print shadows, motion and layers, generated from the library's CSS." },
     ],
   },
   {
     title: "Components",
     items: [
-      { title: "Alert", href: "/docs/components/alert" },
-      { title: "Badge", href: "/docs/components/badge" },
-      { title: "Button", href: "/docs/components/button" },
-      { title: "Card", href: "/docs/components/card" },
-      { title: "Checkbox", href: "/docs/components/checkbox" },
-      { title: "Dialog", href: "/docs/components/dialog" },
-      { title: "Input", href: "/docs/components/input" },
-      { title: "Select", href: "/docs/components/select" },
-      { title: "Switch", href: "/docs/components/switch" },
-      { title: "Tabs", href: "/docs/components/tabs" },
-      { title: "Textarea", href: "/docs/components/textarea" },
-      { title: "Tooltip", href: "/docs/components/tooltip" },
+      { title: "Alert", href: "/docs/components/alert", description:
+        "An inline message set like a margin note, with info, success, warning and danger variants and the right live-region role for each." },
+      { title: "Badge", href: "/docs/components/badge", description:
+        "A small stamped label in five variants: static text in the same tracked uppercase as every eyebrow in the system." },
+      { title: "Button", href: "/docs/components/button", description:
+        "A native button that lifts on hover and sinks on press, with variants, sizes, loading and disabled states, and a render prop to become a link." },
+      { title: "Card", href: "/docs/components/card", description:
+        "A printed panel built from small parts: header, label, title, description, content and footer. Raised with a hard shadow, or flat." },
+      { title: "Checkbox", href: "/docs/components/checkbox", description:
+        "An accessible checkbox built on Base UI, with a mixed state, form support and an optional label that wraps the control." },
+      { title: "Dialog", href: "/docs/components/dialog", description:
+        "A modal dialog on a flat veil with a hard shadow. Traps focus, closes with Escape and returns focus to its trigger. Built on Base UI." },
+      { title: "Input", href: "/docs/components/input", description:
+        "A flat, ruled text field on a plain input element, with sizes, an invalid state and full support for browser autofill and forms." },
+      { title: "Select", href: "/docs/components/select", description:
+        "Pick one value from a list: a flat trigger, a raised list with highlighted items, groups, typeahead and form submission. Built on Base UI." },
+      { title: "Switch", href: "/docs/components/switch", description:
+        "A switch for settings that apply immediately: a block of ink slides across the track. Built on Base UI with full keyboard support." },
+      { title: "Tabs", href: "/docs/components/tabs", description:
+        "Accessible tabs with roving focus and arrow-key navigation, horizontal or vertical. The selected tab is inked in. Built on Base UI." },
+      { title: "Textarea", href: "/docs/components/textarea", description:
+        "The multi-line sibling of Input: flat, ruled, resizable, with an invalid state and the same labelling rules." },
+      { title: "Tooltip", href: "/docs/components/tooltip", description:
+        "A short visual hint that opens on hover and keyboard focus and closes with Escape. Built on Base UI. Not announced to screen readers." },
     ],
   },
 ];
 
 export const flatNav = nav.flatMap((section) => section.items);
+
+/** The section ("Guide" or "Components") a page belongs to. */
+export function sectionOf(href: string): string | undefined {
+  return nav.find((section) => section.items.some((item) => item.href === href))?.title;
+}
+
+export function findPage(href: string): NavItem | undefined {
+  return flatNav.find((item) => item.href === href);
+}

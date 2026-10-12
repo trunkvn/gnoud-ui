@@ -10,8 +10,9 @@ import {
   SelectValue,
 } from "@gnoud-ui/react";
 import { Example, PageHeader, PropsTable } from "@/components/example";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = { title: "Select" };
+export const metadata = pageMetadata("/docs/components/select");
 
 const rows = [
   ["Select items", "{ label, value }[]", "-", "Pass this so the trigger can show the selected label, not the raw value."],
@@ -39,7 +40,7 @@ const food = [
 export default function SelectPage() {
   return (
     <>
-      <PageHeader eyebrow="Component · 12" title="Select">
+      <PageHeader href="/docs/components/select" eyebrow="Component · 12" title="Select">
         Pick one value from a list. The trigger is a flat field like Input; the list is raised, and
         the highlighted item is inked in like the selected tab. Built on Base UI for keyboard,
         typeahead and form behaviour.
