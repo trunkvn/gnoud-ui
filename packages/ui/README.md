@@ -12,6 +12,8 @@ is hard.
 - **No Tailwind required**, but it works well with it
 - **Vietnamese-friendly** type tokens: the default fonts cover Vietnamese
 
+**Documentation, live examples and a token reference: [gnoud-ui.vercel.app](https://gnoud-ui.vercel.app)**
+
 Requires React 19.
 
 ## Install

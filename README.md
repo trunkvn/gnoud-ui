@@ -8,6 +8,8 @@ publishable package and the documentation site that is also its test bench.
 | [`packages/ui`](packages/ui) | `@gnoud-ui/react`: the npm package (12 components, design tokens, one stylesheet) |
 | [`apps/docs`](apps/docs) | The docs site (Next.js): guides, a page per component, a token reference |
 
+**Live docs: [gnoud-ui.vercel.app](https://gnoud-ui.vercel.app)** · [npm](https://www.npmjs.com/package/@gnoud-ui/react)
+
 See the [package README](packages/ui/README.md) for installation and usage.
 
 ## Design
