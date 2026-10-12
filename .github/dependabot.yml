@@ -8,6 +8,13 @@ updates:
     groups:
       minor-and-patch:
         update-types: [minor, patch]
+    ignore:
+      # TypeScript 7 is a full rewrite; adopt it deliberately, not through a bot.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      # Keep the Node typings on the Node version we run and test (24).
+      - dependency-name: "@types/node"
+        update-types: [version-update:semver-major]
   - package-ecosystem: github-actions
     directory: /
     schedule:
