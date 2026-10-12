@@ -1,0 +1,88 @@
+@layer gnoud-ui {
+  .gu-tabs {
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+  }
+  .gu-tabs[data-orientation="vertical"] {
+    display: flex;
+    gap: var(--gu-space-5);
+  }
+
+  /* A segmented strip: the selected tab is inked in, like a pressed block. */
+  .gu-tabs__list {
+    display: inline-flex;
+    max-width: 100%;
+    overflow-x: auto;
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+  }
+  .gu-tabs__list[data-orientation="vertical"] {
+    flex-direction: column;
+    align-self: flex-start;
+    overflow-x: visible;
+  }
+
+  .gu-tabs__tab {
+    flex-shrink: 0;
+    min-height: 2.25rem;
+    padding: 0 var(--gu-space-4);
+
+    font: inherit;
+    font-size: var(--gu-text-sm);
+    font-weight: var(--gu-weight-medium);
+    color: var(--gu-ink);
+    background: transparent;
+    border: 0;
+    border-right: var(--gu-line-width) solid var(--gu-line);
+    cursor: pointer;
+
+    transition: background-color var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  .gu-tabs__tab:last-of-type {
+    border-right: 0;
+  }
+  .gu-tabs__list[data-orientation="vertical"] .gu-tabs__tab {
+    border-right: 0;
+    border-bottom: var(--gu-line-width) solid var(--gu-line);
+    text-align: left;
+  }
+  .gu-tabs__list[data-orientation="vertical"] .gu-tabs__tab:last-of-type {
+    border-bottom: 0;
+  }
+
+  @media (hover: hover) {
+    .gu-tabs__tab:not([data-active]):not([data-disabled]):hover {
+      background: var(--gu-tint);
+    }
+  }
+  .gu-tabs__tab[data-active] {
+    color: var(--gu-bg);
+    background: var(--gu-ink);
+  }
+  .gu-tabs__tab[data-disabled] {
+    color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+
+  /* inside the strip, so the ring is not clipped by overflow */
+  .gu-tabs__tab:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: -4px;
+  }
+  .gu-tabs__tab[data-active]:focus-visible {
+    outline-color: var(--gu-accent-ink);
+  }
+
+  .gu-tabs__panel {
+    margin-top: var(--gu-space-5);
+    line-height: var(--gu-leading-normal);
+  }
+  .gu-tabs[data-orientation="vertical"] .gu-tabs__panel {
+    margin-top: 0;
+  }
+  .gu-tabs__panel:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+}

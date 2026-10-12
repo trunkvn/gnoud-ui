@@ -26,6 +26,9 @@ export type { CheckboxProps } from "./components/checkbox/checkbox";
 export { Input } from "./components/input/input";
 export type { InputProps, InputSize } from "./components/input/input";
 
+export { Tabs, TabsList, TabsPanel, TabsTab } from "./components/tabs/tabs";
+export type { TabsListProps, TabsPanelProps, TabsProps, TabsTabProps } from "./components/tabs/tabs";
+
 export { Switch } from "./components/switch/switch";
 export type { SwitchProps } from "./components/switch/switch";
 
