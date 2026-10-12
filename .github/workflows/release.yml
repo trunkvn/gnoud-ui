@@ -1,7 +1,9 @@
 name: Release
 
 # Changesets: a push to main either opens/updates a "Version Packages" pull request (when there
-# are pending changesets) or, when that pull request is merged, publishes to npm.
+# are pending changesets) or, when that pull request is merged, publishes to npm, tags the release
+# and creates a GitHub release. Uses changesets/action v2, which matches Changesets CLI v3
+# (v1 reads the CLI's stdout, whose format changed in v3, and so never noticed a publish).
 #
 # One-time setup, in this repository's Settings > Secrets and variables > Actions:
 #   NPM_TOKEN  a granular npm access token with "Read and write" on the @gnoud-ui scope
@@ -37,15 +39,14 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
       - run: npm ci
-      - uses: changesets/action@v1
+      - uses: changesets/action@v2
         with:
-          version: npm run version-packages
-          publish: npm run release
-          commit: "chore: version packages"
-          title: "chore: version packages"
+          version-script: npm run version-packages
+          publish-script: npm run release
+          commit-message: "chore: version packages"
+          pr-title: "chore: version packages"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # npm auth comes from setup-node's registry-url, which reads NODE_AUTH_TOKEN.
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           # Signs the package so npm shows where and how it was built.
           NPM_CONFIG_PROVENANCE: "true"
