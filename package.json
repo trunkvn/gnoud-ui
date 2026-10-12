@@ -1,26 +1,35 @@
 {
-  "name": "gnoud-ui",
-  "version": "0.1.0",
+  "name": "gnoud-ui-monorepo",
   "private": true,
+  "packageManager": "npm@11.13.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.4.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "e2e": "turbo run e2e",
+    "changeset": "changeset",
+    "version-packages": "changeset version && npm install --package-lock-only",
+    "release": "turbo run test build --filter=@gnoud-ui/react && changeset publish"
   },
   "devDependencies": {
-    "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.0",
-    "tailwindcss": "^4",
+    "@changesets/cli": "^3.0.3",
+    "turbo": "^2.11.7",
     "typescript": "^5"
+  },
+  "description": "gnoud-ui monorepo: the @gnoud-ui/react component library and its documentation site.",
+  "license": "MIT",
+  "author": "gnoud",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trunkvn/gnoud-ui.git"
+  },
+  "engines": {
+    "node": "^22.18.0 || ^24.11.0 || >=26.0.0"
   }
 }
