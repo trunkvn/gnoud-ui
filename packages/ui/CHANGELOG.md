@@ -1,5 +1,11 @@
 # @gnoud-ui/react
 
+## 0.1.1
+
+### Patch Changes
+
+- 92b1eed: Link the documentation site (https://gnoud-ui.vercel.app) from the package metadata and README.
+
 ## 0.1.0
 
 ### Minor Changes
