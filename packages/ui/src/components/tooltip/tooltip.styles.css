@@ -1,0 +1,42 @@
+@layer gnoud-ui {
+  .gu-tooltip__positioner {
+    z-index: var(--gu-z-popup);
+  }
+
+  /* Inked in: the inverse of the page, like a label stamped on top. */
+  .gu-tooltip {
+    box-sizing: border-box;
+    max-width: 18rem;
+    padding: var(--gu-space-1) var(--gu-space-3);
+
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-sm);
+    line-height: var(--gu-leading-snug);
+    color: var(--gu-bg);
+    background: var(--gu-ink);
+    border-radius: var(--gu-radius-sm);
+
+    transition:
+      opacity var(--gu-duration-fast) var(--gu-ease-standard),
+      transform var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  .gu-tooltip[data-starting-style],
+  .gu-tooltip[data-ending-style] {
+    opacity: 0;
+  }
+  .gu-tooltip[data-starting-style][data-side="top"] {
+    transform: translateY(2px);
+  }
+  .gu-tooltip[data-starting-style][data-side="bottom"] {
+    transform: translateY(-2px);
+  }
+  .gu-tooltip[data-starting-style][data-side="left"] {
+    transform: translateX(2px);
+  }
+  .gu-tooltip[data-starting-style][data-side="right"] {
+    transform: translateX(-2px);
+  }
+  .gu-tooltip[data-instant] {
+    transition: none;
+  }
+}

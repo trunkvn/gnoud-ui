@@ -1,0 +1,160 @@
+@layer gnoud-ui {
+  .gu-select__label {
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-sm);
+    font-weight: var(--gu-weight-medium);
+    color: var(--gu-ink);
+  }
+
+  /* Looks like an Input with a chevron: a field you write into, so it stays flat. */
+  .gu-select__trigger {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gu-space-3);
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0 var(--gu-space-4);
+
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-md);
+    line-height: 1.25;
+    color: var(--gu-ink);
+    text-align: left;
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    cursor: pointer;
+  }
+  .gu-select__trigger:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+  .gu-select__trigger[data-disabled] {
+    color: var(--gu-ink-muted);
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+
+  .gu-select__value {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .gu-select__value[data-placeholder] {
+    color: var(--gu-ink-muted);
+  }
+
+  .gu-select__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    transition: transform var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  .gu-select__icon svg {
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: square;
+  }
+  .gu-select__trigger[data-popup-open] .gu-select__icon {
+    transform: rotate(180deg);
+  }
+
+  .gu-select__positioner {
+    z-index: var(--gu-z-popup);
+  }
+
+  /* The list is raised, because you press things in it. */
+  .gu-select__popup {
+    box-sizing: border-box;
+    min-width: var(--anchor-width);
+    max-height: var(--available-height);
+    overflow-y: auto;
+
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-shadow-md);
+
+    transition:
+      opacity var(--gu-duration-fast) var(--gu-ease-standard),
+      transform var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  .gu-select__popup[data-starting-style],
+  .gu-select__popup[data-ending-style] {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  .gu-select__popup:focus-visible {
+    outline: none;
+  }
+
+  .gu-select__list {
+    padding: var(--gu-space-1);
+  }
+
+  .gu-select__item {
+    display: flex;
+    align-items: center;
+    gap: var(--gu-space-2);
+    padding: var(--gu-space-2) var(--gu-space-3) var(--gu-space-2) var(--gu-space-2);
+    font-size: var(--gu-text-md);
+    line-height: 1.25;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+  }
+  /* Keyboard and pointer highlight: inked in, like the selected tab. */
+  .gu-select__item[data-highlighted] {
+    color: var(--gu-bg);
+    background: var(--gu-ink);
+  }
+  .gu-select__item[data-disabled] {
+    color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+  .gu-select__item[data-disabled][data-highlighted] {
+    color: var(--gu-ink-muted);
+    background: transparent;
+  }
+
+  .gu-select__item-indicator {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+  }
+  .gu-select__item-indicator svg {
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
+  }
+  .gu-select__item-text {
+    flex: 1;
+    /* items without a selected check still line up with ones that have it */
+    margin-left: 0;
+  }
+
+  .gu-select__group-label {
+    padding: var(--gu-space-2) var(--gu-space-3);
+    font-family: var(--gu-font-mono);
+    font-size: var(--gu-text-xs);
+    letter-spacing: var(--gu-tracking-label);
+    text-transform: uppercase;
+    color: var(--gu-ink-muted);
+  }
+  .gu-select__separator {
+    height: var(--gu-line-width);
+    margin: var(--gu-space-1) 0;
+    background: var(--gu-line);
+  }
+}
