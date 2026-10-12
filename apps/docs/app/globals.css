@@ -1,0 +1,218 @@
+/*
+ * Layer order matters. gnoud-ui must sit above Tailwind's base (so its reset does not
+ * flatten our buttons) and below utilities (so className="w-full" can override us).
+ * Declare the order first, then import both.
+ */
+@layer theme, base, gnoud-ui, components, utilities;
+
+@import "tailwindcss";
+@import "@gnoud-ui/react/styles.css";
+
+/* Point the library's font tokens at the fonts next/font loads. */
+:root {
+  --gu-font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --gu-font-body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --gu-font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Expose the tokens to Tailwind utilities for the docs site itself. */
+@theme inline {
+  --color-bg: var(--gu-bg);
+  --color-surface: var(--gu-surface);
+  --color-tint: var(--gu-tint);
+  --color-ink: var(--gu-ink);
+  --color-muted: var(--gu-ink-muted);
+  --color-line: var(--gu-line);
+  --color-accent: var(--gu-accent);
+  --color-accent-2: var(--gu-accent-2);
+  --font-display: var(--gu-font-display);
+  --font-sans: var(--gu-font-body);
+  --font-mono: var(--gu-font-mono);
+}
+
+body {
+  background: var(--gu-bg);
+  color: var(--gu-ink);
+  font-family: var(--gu-font-body);
+  line-height: var(--gu-leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- docs chrome (not part of the library) ---------- */
+
+/*
+ * In the base layer on purpose: unlayered CSS beats every layer, so a global focus rule out
+ * here would override the library's own focus styles (for example the select's highlighted
+ * item, which is inked in instead of ringed). In base it only styles the docs' own links.
+ */
+@layer base {
+  :focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+}
+
+.nav-link {
+  display: block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--gu-ink-muted);
+  border-left: 2px solid transparent;
+}
+.nav-link:hover {
+  color: var(--gu-ink);
+}
+.nav-link[aria-current="page"] {
+  font-weight: 500;
+  color: var(--gu-ink);
+  border-left-color: var(--gu-accent);
+}
+
+.mobile-nav {
+  position: relative;
+}
+.mobile-nav__summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 var(--gu-space-4);
+  font-size: var(--gu-text-sm);
+  font-weight: var(--gu-weight-medium);
+  list-style: none;
+  cursor: pointer;
+  border: var(--gu-border-width) solid var(--gu-border);
+  border-radius: var(--gu-radius-sm);
+  background: var(--gu-surface);
+}
+.mobile-nav__summary::-webkit-details-marker {
+  display: none;
+}
+.mobile-nav__panel {
+  position: fixed;
+  top: 4rem;
+  right: 0;
+  left: 0;
+  max-height: calc(100vh - 4rem);
+  padding: 1.5rem 1.25rem 2rem;
+  overflow-y: auto;
+  background: var(--gu-bg);
+  border-bottom: 1px solid var(--gu-line);
+}
+
+.pager-link {
+  display: grid;
+  gap: 0.25rem;
+  font-family: var(--gu-font-display);
+  font-size: var(--gu-text-lg);
+  font-weight: var(--gu-weight-bold);
+  letter-spacing: var(--gu-tracking-display);
+}
+.pager-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.pager-link__hint {
+  font-family: var(--gu-font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: var(--gu-tracking-label);
+  text-transform: uppercase;
+  color: var(--gu-ink-muted);
+}
+
+/* code blocks */
+.code-block {
+  background: var(--gu-tint);
+  border: 1px solid var(--gu-line);
+}
+.code-block__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  border-bottom: 1px solid var(--gu-line);
+}
+/* the label only; the Copy button must not inherit the tracking and caps */
+.code-block__bar > span {
+  font-family: var(--gu-font-mono);
+  font-size: 11px;
+  letter-spacing: var(--gu-tracking-label);
+  text-transform: uppercase;
+  color: var(--gu-ink-muted);
+}
+.code-block pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: var(--gu-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  background: none;
+}
+.code-block code {
+  font-family: inherit;
+}
+.shiki span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+}
+[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .shiki span {
+    color: var(--shiki-dark);
+    font-style: var(--shiki-dark-font-style);
+  }
+}
+
+/* long-form text */
+.prose-gu > * + * {
+  margin-top: 1rem;
+}
+.prose-gu h2 {
+  margin-top: 3rem;
+  font-family: var(--gu-font-display);
+  font-size: var(--gu-text-2xl);
+  font-weight: var(--gu-weight-bold);
+  line-height: var(--gu-leading-snug);
+  letter-spacing: var(--gu-tracking-display);
+}
+.prose-gu h3 {
+  margin-top: 2rem;
+  font-family: var(--gu-font-display);
+  font-size: var(--gu-text-lg);
+  font-weight: var(--gu-weight-bold);
+  letter-spacing: var(--gu-tracking-display);
+}
+.prose-gu p,
+.prose-gu li {
+  max-width: 68ch;
+  line-height: 1.7;
+}
+.prose-gu ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.prose-gu li + li {
+  margin-top: 0.35rem;
+}
+.prose-gu a {
+  text-decoration: underline;
+  text-decoration-color: var(--gu-accent);
+  text-underline-offset: 3px;
+}
+.prose-gu :not(pre) > code {
+  padding: 0.1em 0.35em;
+  font-family: var(--gu-font-mono);
+  font-size: 0.875em;
+  background: var(--gu-tint);
+  border-radius: var(--gu-radius-sm);
+}
+.prose-gu .note {
+  padding: 1rem 1.25rem;
+  background: var(--gu-surface);
+  border: var(--gu-line-width) solid var(--gu-line);
+  border-left: 3px solid var(--gu-accent-2);
+}
