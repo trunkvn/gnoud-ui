@@ -1,0 +1,136 @@
+@layer gnoud-ui {
+  .gu-button {
+    /* per-size values, set below */
+    --gu-button-height: 2.5rem;
+    --gu-button-padding-x: var(--gu-space-5);
+    --gu-button-font-size: var(--gu-text-md);
+
+    /* per-variant values, set below */
+    --gu-button-bg: var(--gu-surface);
+    --gu-button-ink: var(--gu-ink);
+    --gu-button-border: var(--gu-border);
+    --gu-button-shadow: var(--gu-shadow-md);
+
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gu-space-2);
+    min-height: var(--gu-button-height);
+    padding: 0 var(--gu-button-padding-x);
+
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-button-font-size);
+    font-weight: var(--gu-weight-medium);
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    color: var(--gu-button-ink);
+    background: var(--gu-button-bg);
+    border: var(--gu-border-width) solid var(--gu-button-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-button-shadow);
+    cursor: pointer;
+
+    transition:
+      transform var(--gu-duration-fast) var(--gu-ease-stamp),
+      box-shadow var(--gu-duration-fast) var(--gu-ease-stamp),
+      background-color var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+
+  /* sizes */
+  .gu-button[data-size="sm"] {
+    --gu-button-height: 2rem;
+    --gu-button-padding-x: var(--gu-space-4);
+    --gu-button-font-size: var(--gu-text-sm);
+  }
+  .gu-button[data-size="lg"] {
+    --gu-button-height: 3rem;
+    --gu-button-padding-x: var(--gu-space-6);
+  }
+
+  /* variants */
+  .gu-button[data-variant="primary"] {
+    --gu-button-bg: var(--gu-accent);
+    --gu-button-ink: var(--gu-accent-ink);
+  }
+  .gu-button[data-variant="ghost"] {
+    --gu-button-bg: transparent;
+    --gu-button-border: transparent;
+    --gu-button-shadow: none;
+  }
+
+  .gu-button svg {
+    flex-shrink: 0;
+    width: 1.125em;
+    height: 1.125em;
+  }
+
+  /* Like a stamp: lifts off the paper on hover, presses into it on click. */
+  @media (hover: hover) {
+    .gu-button:not([data-inactive]):hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--gu-shadow-lg);
+    }
+    .gu-button[data-variant="ghost"]:not([data-inactive]):hover {
+      transform: none;
+      box-shadow: none;
+      background: var(--gu-tint);
+    }
+  }
+  .gu-button:not([data-inactive]):active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--gu-shadow-pressed);
+  }
+  .gu-button[data-variant="ghost"]:not([data-inactive]):active {
+    transform: none;
+    box-shadow: none;
+    background: var(--gu-line);
+  }
+
+  .gu-button:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  /* loading: still focusable, but inert */
+  .gu-button[data-loading] {
+    cursor: progress;
+  }
+  .gu-button__spinner {
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: var(--gu-radius-full);
+    animation: gu-button-spin 800ms linear infinite;
+  }
+  @keyframes gu-button-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  /* Slow down rather than stop: a frozen spinner says nothing about progress. */
+  @media (prefers-reduced-motion: reduce) {
+    .gu-button__spinner {
+      animation-duration: 2400ms;
+    }
+  }
+
+  /* disabled */
+  .gu-button[data-disabled] {
+    --gu-button-bg: var(--gu-tint);
+    --gu-button-ink: var(--gu-ink-muted);
+    --gu-button-border: var(--gu-ink-muted);
+    --gu-button-shadow: none;
+    cursor: not-allowed;
+  }
+  .gu-button[data-variant="ghost"][data-disabled] {
+    --gu-button-bg: transparent;
+    --gu-button-border: transparent;
+  }
+}
