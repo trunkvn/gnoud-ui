@@ -1,6 +1,6 @@
 {
   "name": "@gnoud-ui/react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Accessible React components with a paper-and-ink design language. Hard shadows, ruled borders, light and dark themes, plain CSS.",
   "keywords": [
     "react",
