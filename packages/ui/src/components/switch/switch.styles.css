@@ -1,0 +1,89 @@
+@layer gnoud-ui {
+  .gu-switch {
+    --gu-switch-width: 2.75rem;
+    --gu-switch-height: 1.5rem;
+    --gu-switch-pad: 2px;
+
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    width: var(--gu-switch-width);
+    height: var(--gu-switch-height);
+    padding: var(--gu-switch-pad);
+
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-shadow-sm);
+    cursor: pointer;
+
+    transition:
+      background-color var(--gu-duration-base) var(--gu-ease-standard),
+      box-shadow var(--gu-duration-fast) var(--gu-ease-stamp),
+      transform var(--gu-duration-fast) var(--gu-ease-stamp);
+  }
+
+  .gu-switch[data-checked] {
+    background: var(--gu-accent);
+  }
+
+  .gu-switch:not([data-disabled]):not([data-readonly]):active {
+    transform: translate(1px, 1px);
+    box-shadow: var(--gu-shadow-pressed);
+  }
+
+  .gu-switch:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  /* The thumb is a square of ink that slides across, like a block moved on a printing bed. */
+  .gu-switch__thumb {
+    display: block;
+    width: calc(var(--gu-switch-height) - 2 * var(--gu-switch-pad) - 2 * var(--gu-border-width));
+    height: calc(var(--gu-switch-height) - 2 * var(--gu-switch-pad) - 2 * var(--gu-border-width));
+    background: var(--gu-ink);
+    border-radius: 1px;
+    transition: transform var(--gu-duration-base) var(--gu-ease-stamp);
+  }
+  .gu-switch__thumb[data-checked] {
+    background: var(--gu-accent-ink);
+    transform: translateX(
+      calc(
+        var(--gu-switch-width) - var(--gu-switch-height)
+      )
+    );
+  }
+
+  .gu-switch[data-disabled] {
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  .gu-switch[data-disabled] .gu-switch__thumb {
+    background: var(--gu-ink-muted);
+  }
+  .gu-switch[data-disabled][data-checked] {
+    background: var(--gu-ink-muted);
+  }
+  .gu-switch[data-disabled][data-checked] .gu-switch__thumb {
+    background: var(--gu-tint);
+  }
+
+  .gu-switch-field {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gu-space-3);
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-md);
+    line-height: var(--gu-leading-snug);
+    color: var(--gu-ink);
+    cursor: pointer;
+  }
+  .gu-switch-field:has([data-disabled]) {
+    color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+}

@@ -20,8 +20,14 @@ export {
 } from "./components/card/card";
 export type { CardProps, CardTitleProps, CardVariant } from "./components/card/card";
 
+export { Checkbox } from "./components/checkbox/checkbox";
+export type { CheckboxProps } from "./components/checkbox/checkbox";
+
 export { Input } from "./components/input/input";
 export type { InputProps, InputSize } from "./components/input/input";
+
+export { Switch } from "./components/switch/switch";
+export type { SwitchProps } from "./components/switch/switch";
 
 export { Textarea } from "./components/textarea/textarea";
 export type { TextareaProps } from "./components/textarea/textarea";
