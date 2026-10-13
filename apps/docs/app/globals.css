@@ -30,6 +30,15 @@
   --font-mono: var(--gu-font-mono);
 }
 
+/*
+ * The header is sticky and 4rem tall. Without this, tabbing backwards scrolls the focused element
+ * to the very top of the viewport, hidden behind the header (WCAG 2.2, 2.4.11 Focus Not Obscured).
+ * Anchor links (#section) benefit too.
+ */
+html {
+  scroll-padding-top: 5.5rem;
+}
+
 body {
   background: var(--gu-bg);
   color: var(--gu-ink);

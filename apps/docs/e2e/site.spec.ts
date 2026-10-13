@@ -103,3 +103,33 @@ test.describe("header at in-between widths", () => {
     });
   }
 });
+
+test.describe("WCAG 2.2: Focus Not Obscured (2.4.11)", () => {
+  // axe cannot check this one, so it is measured: walk backwards through a page with Shift+Tab (the
+  // browser scrolls each newly focused element to the top edge) and require that the sticky header
+  // never hides the focused element, not even partly. The header's own links and the skip link
+  // (which deliberately floats above the header) are not content, so they are not measured.
+  for (const path of ["/docs/getting-started", "/docs/components/dialog", "/docs/components/menu"]) {
+    test(`${path}: the sticky header never covers the focused element`, async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 700 });
+      await page.goto(path);
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await page.locator("footer a").last().focus();
+
+      const covered: string[] = [];
+      for (let i = 0; i < 60; i++) {
+        await page.keyboard.press("Shift+Tab");
+        const info = await page.evaluate(() => {
+          const el = document.activeElement as HTMLElement | null;
+          if (!el || el === document.body) return null;
+          const header = document.querySelector("header")!;
+          if (header.contains(el) || el.matches('a[href="#main"]')) return null;
+          const rect = el.getBoundingClientRect();
+          return { top: rect.top, headerBottom: header.getBoundingClientRect().bottom, label: (el.textContent || el.tagName).trim().slice(0, 30) };
+        });
+        if (info && info.top < info.headerBottom) covered.push(`${info.label} (top ${Math.round(info.top)} < header bottom ${Math.round(info.headerBottom)})`);
+      }
+      expect(covered).toEqual([]);
+    });
+  }
+});
