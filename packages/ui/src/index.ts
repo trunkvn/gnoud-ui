@@ -62,6 +62,9 @@ export type { MenuContentProps } from "./components/menu/menu";
 export { Popover, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger } from "./components/popover/popover";
 export type { PopoverContentProps } from "./components/popover/popover";
 
+export { Progress } from "./components/progress/progress";
+export type { ProgressProps } from "./components/progress/progress";
+
 export { Radio, RadioGroup } from "./components/radio/radio";
 export type { RadioGroupProps, RadioProps } from "./components/radio/radio";
 
@@ -76,6 +79,9 @@ export {
   SelectTrigger,
   SelectValue,
 } from "./components/select/select";
+
+export { Skeleton } from "./components/skeleton/skeleton";
+export type { SkeletonProps, SkeletonShape } from "./components/skeleton/skeleton";
 
 export { Switch } from "./components/switch/switch";
 export type { SwitchProps } from "./components/switch/switch";

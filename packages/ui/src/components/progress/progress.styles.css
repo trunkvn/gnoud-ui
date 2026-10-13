@@ -1,0 +1,61 @@
+@layer gnoud-ui {
+  .gu-progress {
+    display: grid;
+    gap: var(--gu-space-2);
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+  }
+
+  .gu-progress__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gu-space-4);
+    font-size: var(--gu-text-sm);
+  }
+  .gu-progress__label {
+    font-weight: var(--gu-weight-medium);
+  }
+  .gu-progress__value {
+    font-family: var(--gu-font-mono);
+    color: var(--gu-ink-muted);
+  }
+
+  /* A ruled trough with a block of ink-coloured paint filling it. Flat, no rounding. */
+  .gu-progress__track {
+    position: relative;
+    box-sizing: border-box;
+    height: 0.75rem;
+    overflow: hidden;
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+  }
+  .gu-progress__indicator {
+    height: 100%;
+    background: var(--gu-accent);
+    transition: width var(--gu-duration-slow) var(--gu-ease-standard);
+  }
+
+  /* Unknown length: a block sweeps across. Slower, not frozen, with reduced motion. */
+  .gu-progress__indicator[data-indeterminate] {
+    position: absolute;
+    top: 0;
+    width: 40%;
+    transition: none;
+    animation: gu-progress-sweep 1400ms var(--gu-ease-standard) infinite;
+  }
+  @keyframes gu-progress-sweep {
+    from {
+      left: -40%;
+    }
+    to {
+      left: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gu-progress__indicator[data-indeterminate] {
+      animation-duration: 4200ms;
+    }
+  }
+}

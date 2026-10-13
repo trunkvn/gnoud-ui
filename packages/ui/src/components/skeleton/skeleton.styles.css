@@ -1,0 +1,33 @@
+@layer gnoud-ui {
+  /* Unprinted paper: a hatch of hairlines that breathes. */
+  .gu-skeleton {
+    display: block;
+    width: 100%;
+    height: 1rem;
+    background-color: var(--gu-tint);
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0 6px,
+      var(--gu-line) 6px 7px
+    );
+    border-radius: var(--gu-radius-sm);
+    animation: gu-skeleton-breathe 1600ms ease-in-out infinite;
+  }
+  .gu-skeleton[data-shape="circle"] {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--gu-radius-full);
+  }
+
+  @keyframes gu-skeleton-breathe {
+    50% {
+      opacity: 0.55;
+    }
+  }
+  /* Still hatched, just not moving. */
+  @media (prefers-reduced-motion: reduce) {
+    .gu-skeleton {
+      animation: none;
+    }
+  }
+}
