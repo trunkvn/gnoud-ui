@@ -163,3 +163,200 @@ test.describe("Select", () => {
     await expect(trigger).toHaveText("Cherry");
   });
 });
+
+const section = (page: import("@playwright/test").Page, title: string) =>
+  page.locator("section", { has: page.getByRole("heading", { name: title, exact: true }) });
+
+test.describe("Radio", () => {
+  test("the group is one tab stop and the arrow keys move and select", async ({ page }) => {
+    await page.goto("/docs/components/radio");
+    const group = page.getByRole("radiogroup", { name: "Plan" });
+    await expect(group.getByRole("radio", { name: "Free" })).toBeChecked();
+
+    await group.getByRole("radio", { name: "Free" }).focus();
+    await page.keyboard.press("ArrowDown");
+    await expect(group.getByRole("radio", { name: "Pro" })).toBeFocused();
+    await expect(group.getByRole("radio", { name: "Pro" })).toBeChecked();
+    await expect(group.getByRole("radio", { name: "Free" })).not.toBeChecked();
+  });
+
+  test("a checked radio takes the accent colour, and a disabled one cannot be chosen", async ({ page }) => {
+    await page.goto("/docs/components/radio");
+    const plan = page.getByRole("radiogroup", { name: "Plan" });
+    await plan.getByText("Team").click();
+    await expect(plan.getByRole("radio", { name: "Team" })).toHaveCSS("background-color", "rgb(43, 63, 143)");
+
+    const billing = page.getByRole("radiogroup", { name: "Billing" });
+    await billing.getByText("Lifetime (sold out)").click({ force: true });
+    await expect(billing.getByRole("radio", { name: "Monthly" })).toBeChecked();
+  });
+});
+
+test.describe("Accordion", () => {
+  test("opens a section with a measured height and closes the other one", async ({ page }) => {
+    await page.goto("/docs/components/accordion");
+    const accordion = section(page, "One at a time");
+    const first = accordion.getByRole("button", { name: "What is gnoud-ui?" });
+    const second = accordion.getByRole("button", { name: "Does it need Tailwind?" });
+
+    await expect(first).toHaveAttribute("aria-expanded", "true");
+    await expect(second).toHaveAttribute("aria-expanded", "false");
+    const content = (text: string) => accordion.locator(".gu-accordion__content", { hasText: text });
+    await expect(content("It ships one stylesheet")).toBeHidden();
+
+    await second.click();
+    await expect(second).toHaveAttribute("aria-expanded", "true");
+    await expect(first).toHaveAttribute("aria-expanded", "false");
+    const body = content("It ships one stylesheet");
+    await expect(body).toBeVisible();
+    expect((await body.boundingBox())!.height).toBeGreaterThan(10);
+  });
+
+  test("with `multiple`, several stay open; the chevron turns", async ({ page }) => {
+    await page.goto("/docs/components/accordion");
+    const accordion = section(page, "Several open");
+    await expect(accordion.getByRole("button", { name: "What is gnoud-ui?" })).toHaveAttribute("aria-expanded", "true");
+    await expect(accordion.getByRole("button", { name: "Is dark mode built in?" })).toHaveAttribute("aria-expanded", "true");
+    await expect(accordion.locator(".gu-accordion__icon").first()).toHaveCSS("transform", "matrix(-1, 0, 0, -1, 0, 0)");
+  });
+
+  test("each header is its own tab stop and Enter toggles it", async ({ page }) => {
+    await page.goto("/docs/components/accordion");
+    const accordion = section(page, "One at a time");
+    const second = accordion.getByRole("button", { name: "Does it need Tailwind?" });
+    await accordion.getByRole("button", { name: "What is gnoud-ui?" }).focus();
+    await page.keyboard.press("Tab");
+    await expect(second).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(second).toHaveAttribute("aria-expanded", "true");
+  });
+});
+
+test.describe("Popover", () => {
+  test("opens below its trigger, names itself, and returns focus on Escape", async ({ page }) => {
+    await page.goto("/docs/components/popover");
+    const trigger = page.getByRole("button", { name: "Display", exact: true });
+    await trigger.click();
+
+    const popup = page.getByRole("dialog", { name: "Display" });
+    await expect(popup).toBeVisible();
+    const [t, p] = [await trigger.boundingBox(), await popup.boundingBox()];
+    expect(p!.y).toBeGreaterThanOrEqual(t!.y + t!.height);
+
+    await page.keyboard.press("Escape");
+    await expect(popup).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("closes on an outside click, and Done closes it too", async ({ page }) => {
+    await page.goto("/docs/components/popover");
+    await page.getByRole("button", { name: "Display", exact: true }).click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.mouse.click(4, 300);
+    await expect(page.getByRole("dialog")).toBeHidden();
+
+    await page.getByRole("button", { name: "Display", exact: true }).click();
+    await page.getByRole("button", { name: "Done" }).click();
+    await expect(page.getByRole("dialog")).toBeHidden();
+  });
+
+  test("placement: the right-hand popover opens to the right of its button", async ({ page }) => {
+    await page.goto("/docs/components/popover");
+    const trigger = section(page, "Placement").getByRole("button", { name: "right" });
+    await trigger.click();
+    const [t, p] = [await trigger.boundingBox(), await page.getByRole("dialog", { name: "right" }).boundingBox()];
+    expect(p!.x).toBeGreaterThanOrEqual(t!.x + t!.width);
+  });
+});
+
+test.describe("Menu", () => {
+  test("opens below its trigger and inks in the highlighted item", async ({ page }) => {
+    await page.goto("/docs/components/menu");
+    const trigger = page.getByRole("button", { name: "Actions" });
+    await trigger.click();
+    const menu = page.getByRole("menu");
+    await expect(menu).toBeVisible();
+    const [t, m] = [await trigger.boundingBox(), await menu.boundingBox()];
+    expect(m!.y).toBeGreaterThanOrEqual(t!.y + t!.height);
+
+    await page.keyboard.press("ArrowDown");
+    const highlighted = menu.locator('[role="menuitem"][data-highlighted]');
+    await expect(highlighted).toHaveCount(1);
+    await expect(highlighted).toHaveCSS("background-color", "rgb(24, 21, 15)");
+    await expect(highlighted).toHaveCSS("color", "rgb(243, 238, 227)");
+  });
+
+  test("Enter on an item closes the menu and returns focus to the trigger", async ({ page }) => {
+    await page.goto("/docs/components/menu");
+    const trigger = page.getByRole("button", { name: "Actions" });
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("menu")).toBeVisible();
+    await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("menu")).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test("a disabled item is announced as disabled, and toggle items keep the menu open", async ({ page }) => {
+    await page.goto("/docs/components/menu");
+    await page.getByRole("button", { name: "Actions" }).click();
+    await expect(page.getByRole("menuitem", { name: "Archive" })).toHaveAttribute("aria-disabled", "true");
+    await page.keyboard.press("Escape");
+
+    await page.getByRole("button", { name: "View" }).click();
+    const rulers = page.getByRole("menuitemcheckbox", { name: "Rulers" });
+    await expect(rulers).toHaveAttribute("aria-checked", "false");
+    await rulers.click();
+    await expect(page.getByRole("menu")).toBeVisible();
+    await expect(rulers).toHaveAttribute("aria-checked", "true");
+    await page.getByRole("menuitemradio", { name: "Dark" }).click();
+    await expect(page.getByRole("menuitemradio", { name: "Dark" })).toHaveAttribute("aria-checked", "true");
+  });
+});
+
+test.describe("Progress", () => {
+  test("is a progressbar whose fill matches the value", async ({ page }) => {
+    await page.goto("/docs/components/progress");
+    const bar = page.getByRole("progressbar", { name: "Uploading" });
+    await expect(bar).toHaveAttribute("aria-valuenow", "64");
+    const [track, fill] = [await bar.locator(".gu-progress__track").boundingBox(), await bar.locator(".gu-progress__indicator").boundingBox()];
+    const ratio = fill!.width / track!.width;
+    expect(ratio).toBeGreaterThan(0.58);
+    expect(ratio).toBeLessThan(0.68);
+  });
+
+  test("indeterminate announces no value and its block actually moves", async ({ page }) => {
+    await page.goto("/docs/components/progress");
+    const bar = page.getByRole("progressbar", { name: "Preparing" });
+    await expect(bar).not.toHaveAttribute("aria-valuenow", /.*/);
+    const block = bar.locator(".gu-progress__indicator");
+    const x1 = (await block.boundingBox())!.x;
+    await page.waitForTimeout(350);
+    const x2 = (await block.boundingBox())!.x;
+    expect(x2).not.toBe(x1);
+  });
+
+  test("with reduced motion the sweep is slower, not stopped", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/docs/components/progress");
+    const block = page.getByRole("progressbar", { name: "Preparing" }).locator(".gu-progress__indicator");
+    await expect(block).toHaveCSS("animation-duration", "4.2s");
+  });
+});
+
+test.describe("Skeleton", () => {
+  test("is hidden from assistive tech, hatched, and breathing", async ({ page }) => {
+    await page.goto("/docs/components/skeleton");
+    const skeleton = page.locator(".gu-skeleton").first();
+    await expect(skeleton).toHaveAttribute("aria-hidden", "true");
+    await expect(skeleton).toHaveCSS("background-image", /repeating-linear-gradient/);
+    await expect(skeleton).toHaveCSS("animation-name", "gu-skeleton-breathe");
+  });
+
+  test("stops breathing with reduced motion", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/docs/components/skeleton");
+    await expect(page.locator(".gu-skeleton").first()).toHaveCSS("animation-name", "none");
+  });
+});

@@ -11,7 +11,7 @@ for (const scheme of ["light", "dark"] as const) {
       test(`${path} has no WCAG A/AA violations`, async ({ page }) => {
         await page.goto(path);
         const results = await new AxeBuilder({ page })
-          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
           .analyze();
         const summary = results.violations.map((v) => ({
           rule: v.id,
