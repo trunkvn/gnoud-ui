@@ -48,6 +48,7 @@ console.log("EXPORTS " + JSON.stringify(exportsList));
 
 const html = (el) => renderToString(el);
 const cases = {
+  Accordion: () => h(UI.Accordion, null, h(UI.AccordionItem, { value: "a" }, h(UI.AccordionTrigger, null, "Q"), h(UI.AccordionPanel, null, "A"))),
   Alert: () => h(UI.Alert, { variant: "danger" }, h(UI.AlertTitle, null, "t"), h(UI.AlertDescription, null, "d")),
   Badge: () => h(UI.Badge, { variant: "accent" }, "New"),
   Button: () => h(UI.Button, { variant: "primary", size: "lg", loading: true }, "Go"),
@@ -55,7 +56,12 @@ const cases = {
   Checkbox: () => h(UI.Checkbox, { label: "Remember me", defaultChecked: true }),
   Dialog: () => h(UI.Dialog, null, h(UI.DialogTrigger, null, "Open"), h(UI.DialogContent, null, h(UI.DialogTitle, null, "t"))),
   Input: () => h(UI.Input, { invalid: true, "aria-label": "x" }),
+  Menu: () => h(UI.Menu, null, h(UI.MenuTrigger, null, "Open"), h(UI.MenuContent, null, h(UI.MenuItem, null, "x"))),
+  Popover: () => h(UI.Popover, null, h(UI.PopoverTrigger, null, "Open"), h(UI.PopoverContent, null, h(UI.PopoverTitle, null, "t"))),
+  Progress: () => h(UI.Progress, { label: "Upload", value: 40, showValue: true }),
+  Radio: () => h(UI.RadioGroup, { "aria-label": "x", defaultValue: "a" }, h(UI.Radio, { value: "a", label: "A" })),
   Select: () => h(UI.Select, { items: [{ label: "A", value: "a" }] }, h(UI.SelectTrigger, { "aria-label": "x" }, h(UI.SelectValue, { placeholder: "Pick" })), h(UI.SelectContent, null, h(UI.SelectItem, { value: "a" }, "A"))),
+  Skeleton: () => h(UI.Skeleton, { shape: "circle" }),
   Switch: () => h(UI.Switch, { label: "On" }),
   Tabs: () => h(UI.Tabs, { defaultValue: "a" }, h(UI.TabsList, null, h(UI.TabsTab, { value: "a" }, "A")), h(UI.TabsPanel, { value: "a" }, "pa")),
   Textarea: () => h(UI.Textarea, { "aria-label": "x" }),
@@ -94,7 +100,7 @@ check(css.includes("--gu-accent") && css.includes(".gu-button") && css.includes(
 // ---- 4. types: a consumer's TypeScript accepts the API (both common resolution modes)
 writeFileSync(join(app, "check.tsx"), `
 import "@gnoud-ui/react/styles.css";
-import { Button, Card, CardTitle, Checkbox, Dialog, DialogContent, DialogTitle, DialogTrigger, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Switch, Tabs, TabsList, TabsPanel, TabsTab, Tooltip } from "@gnoud-ui/react";
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger, Button, Card, CardTitle, Checkbox, Dialog, DialogContent, DialogTitle, DialogTrigger, Input, Menu, MenuContent, MenuItem, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Progress, Radio, RadioGroup, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Skeleton, Switch, Tabs, TabsList, TabsPanel, TabsTab, Tooltip } from "@gnoud-ui/react";
 import type { ButtonProps, InputProps } from "@gnoud-ui/react";
 
 const buttonProps: ButtonProps = { variant: "primary", size: "sm", loading: false };
@@ -115,6 +121,12 @@ export const tree = (
     <Tabs defaultValue="a"><TabsList><TabsTab value="a">A</TabsTab></TabsList><TabsPanel value="a">p</TabsPanel></Tabs>
     <Dialog><DialogTrigger render={<Button />}>Open</DialogTrigger><DialogContent><DialogTitle>t</DialogTitle></DialogContent></Dialog>
     <Tooltip content="hi"><Button>x</Button></Tooltip>
+    <RadioGroup aria-label="x" defaultValue="a" onValueChange={(v: string) => void v}><Radio value="a" label="A" /></RadioGroup>
+    <Accordion multiple><AccordionItem value="a"><AccordionTrigger>Q</AccordionTrigger><AccordionPanel>A</AccordionPanel></AccordionItem></Accordion>
+    <Popover><PopoverTrigger render={<Button />}>Open</PopoverTrigger><PopoverContent side="right">c</PopoverContent></Popover>
+    <Menu><MenuTrigger render={<Button />}>Open</MenuTrigger><MenuContent><MenuItem onClick={() => {}}>x</MenuItem></MenuContent></Menu>
+    <Progress label="Upload" value={40} showValue />
+    <Skeleton shape="circle" />
   </Card>
 );
 
