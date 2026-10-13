@@ -26,6 +26,8 @@ export const nav: NavSection[] = [
   {
     title: "Components",
     items: [
+      { title: "Accordion", href: "/docs/components/accordion", description:
+        "Stacked sections that open and close, one at a time or several. Each header is a real button inside a heading. Built on Base UI." },
       { title: "Alert", href: "/docs/components/alert", description:
         "An inline message set like a margin note, with info, success, warning and danger variants and the right live-region role for each." },
       { title: "Badge", href: "/docs/components/badge", description:
@@ -40,8 +42,18 @@ export const nav: NavSection[] = [
         "A modal dialog on a flat veil with a hard shadow. Traps focus, closes with Escape and returns focus to its trigger. Built on Base UI." },
       { title: "Input", href: "/docs/components/input", description:
         "A flat, ruled text field on a plain input element, with sizes, an invalid state and full support for browser autofill and forms." },
+      { title: "Menu", href: "/docs/components/menu", description:
+        "A dropdown list of actions with checkbox and radio items, groups and links. Arrow keys, typeahead and Escape. Built on Base UI." },
+      { title: "Popover", href: "/docs/components/popover", description:
+        "A floating panel anchored to a button, for extra content or a small form. Closes on Escape or an outside click. Built on Base UI." },
+      { title: "Progress", href: "/docs/components/progress", description:
+        "A bar for work with a measurable end, or a moving block when the length is unknown. Announced as a progressbar. Built on Base UI." },
+      { title: "Radio", href: "/docs/components/radio", description:
+        "Radio buttons for choosing exactly one option, in a group with arrow-key navigation. Round, so it never reads as a checkbox. Built on Base UI." },
       { title: "Select", href: "/docs/components/select", description:
         "Pick one value from a list: a flat trigger, a raised list with highlighted items, groups, typeahead and form submission. Built on Base UI." },
+      { title: "Skeleton", href: "/docs/components/skeleton", description:
+        "A hatched placeholder for content that is still loading. Decorative and hidden from screen readers; pairs with aria-busy on its container." },
       { title: "Switch", href: "/docs/components/switch", description:
         "A switch for settings that apply immediately: a block of ink slides across the track. Built on Base UI with full keyboard support." },
       { title: "Tabs", href: "/docs/components/tabs", description:
