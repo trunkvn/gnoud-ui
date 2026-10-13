@@ -44,6 +44,24 @@ export type { InputProps, InputSize } from "./components/input/input";
 export { Tabs, TabsList, TabsPanel, TabsTab } from "./components/tabs/tabs";
 export type { TabsListProps, TabsPanelProps, TabsProps, TabsTabProps } from "./components/tabs/tabs";
 
+export {
+  Menu,
+  MenuCheckboxItem,
+  MenuContent,
+  MenuGroup,
+  MenuGroupLabel,
+  MenuItem,
+  MenuLinkItem,
+  MenuRadioGroup,
+  MenuRadioItem,
+  MenuSeparator,
+  MenuTrigger,
+} from "./components/menu/menu";
+export type { MenuContentProps } from "./components/menu/menu";
+
+export { Popover, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger } from "./components/popover/popover";
+export type { PopoverContentProps } from "./components/popover/popover";
+
 export { Radio, RadioGroup } from "./components/radio/radio";
 export type { RadioGroupProps, RadioProps } from "./components/radio/radio";
 

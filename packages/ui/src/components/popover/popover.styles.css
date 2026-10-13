@@ -1,0 +1,50 @@
+@layer gnoud-ui {
+  .gu-popover__positioner {
+    z-index: var(--gu-z-popup);
+  }
+
+  /* Raised like the select's list: it is something you press things in. */
+  .gu-popover {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gu-space-2);
+    width: max-content;
+    max-width: min(20rem, calc(100vw - 2rem));
+    padding: var(--gu-space-4);
+
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-md);
+    box-shadow: var(--gu-shadow-md);
+
+    transition:
+      opacity var(--gu-duration-fast) var(--gu-ease-standard),
+      transform var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  .gu-popover[data-starting-style],
+  .gu-popover[data-ending-style] {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  .gu-popover:focus-visible {
+    outline: none;
+  }
+
+  .gu-popover__title {
+    margin: 0;
+    font-family: var(--gu-font-display);
+    font-size: var(--gu-text-lg);
+    font-weight: var(--gu-weight-bold);
+    line-height: var(--gu-leading-snug);
+    letter-spacing: var(--gu-tracking-display);
+  }
+  .gu-popover__description {
+    margin: 0;
+    font-size: var(--gu-text-sm);
+    line-height: var(--gu-leading-normal);
+    color: var(--gu-ink-muted);
+  }
+}
