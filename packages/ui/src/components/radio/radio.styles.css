@@ -1,0 +1,79 @@
+@layer gnoud-ui {
+  .gu-radio-group {
+    display: grid;
+    gap: var(--gu-space-3);
+  }
+
+  /* Round, so it never reads as a checkbox: one choice, not many. */
+  .gu-radio {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-full);
+    box-shadow: var(--gu-shadow-sm);
+    cursor: pointer;
+
+    transition:
+      transform var(--gu-duration-fast) var(--gu-ease-stamp),
+      box-shadow var(--gu-duration-fast) var(--gu-ease-stamp),
+      background-color var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+
+  .gu-radio[data-checked] {
+    background: var(--gu-accent);
+  }
+
+  .gu-radio:not([data-disabled]):not([data-readonly]):active {
+    transform: translate(1px, 1px);
+    box-shadow: var(--gu-shadow-pressed);
+  }
+
+  .gu-radio:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  .gu-radio__dot {
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--gu-accent-ink);
+    border-radius: var(--gu-radius-full);
+  }
+
+  .gu-radio[data-disabled] {
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  .gu-radio[data-disabled][data-checked] {
+    background: var(--gu-ink-muted);
+  }
+  .gu-radio[data-disabled] .gu-radio__dot {
+    background: var(--gu-tint);
+  }
+
+  .gu-radio-field {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gu-space-3);
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-md);
+    line-height: var(--gu-leading-snug);
+    color: var(--gu-ink);
+    cursor: pointer;
+  }
+  .gu-radio-field:has([data-disabled]) {
+    color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+}

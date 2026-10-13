@@ -1,5 +1,8 @@
 import "./styles/index.css";
 
+export { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "./components/accordion/accordion";
+export type { AccordionItemProps, AccordionPanelProps, AccordionProps, AccordionTriggerProps } from "./components/accordion/accordion";
+
 export { Alert, AlertDescription, AlertTitle } from "./components/alert/alert";
 export type { AlertProps, AlertVariant } from "./components/alert/alert";
 
@@ -40,6 +43,9 @@ export type { InputProps, InputSize } from "./components/input/input";
 
 export { Tabs, TabsList, TabsPanel, TabsTab } from "./components/tabs/tabs";
 export type { TabsListProps, TabsPanelProps, TabsProps, TabsTabProps } from "./components/tabs/tabs";
+
+export { Radio, RadioGroup } from "./components/radio/radio";
+export type { RadioGroupProps, RadioProps } from "./components/radio/radio";
 
 export {
   Select,

@@ -1,0 +1,87 @@
+@layer gnoud-ui {
+  /* A ruled list: one outer frame, hairlines between the sections. */
+  .gu-accordion {
+    box-sizing: border-box;
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+  }
+
+  .gu-accordion__item + .gu-accordion__item {
+    border-top: var(--gu-line-width) solid var(--gu-line);
+  }
+
+  .gu-accordion__header {
+    margin: 0;
+    font: inherit;
+  }
+
+  .gu-accordion__trigger {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gu-space-4);
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--gu-space-3) var(--gu-space-5);
+
+    font: inherit;
+    font-size: var(--gu-text-md);
+    font-weight: var(--gu-weight-medium);
+    line-height: var(--gu-leading-snug);
+    color: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+
+    transition: background-color var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  @media (hover: hover) {
+    .gu-accordion__trigger:not([data-disabled]):hover {
+      background: var(--gu-tint);
+    }
+  }
+  /* inside the frame, so the ring is not clipped by the border */
+  .gu-accordion__trigger:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: -4px;
+  }
+  .gu-accordion__trigger[data-disabled] {
+    color: var(--gu-ink-muted);
+    cursor: not-allowed;
+  }
+
+  .gu-accordion__icon {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: square;
+    transition: transform var(--gu-duration-base) var(--gu-ease-standard);
+  }
+  .gu-accordion__trigger[data-panel-open] .gu-accordion__icon {
+    transform: rotate(180deg);
+  }
+
+  /* Height animates between 0 and the measured height Base UI exposes. */
+  .gu-accordion__panel {
+    height: var(--accordion-panel-height);
+    overflow: hidden;
+    transition: height var(--gu-duration-base) var(--gu-ease-standard);
+  }
+  .gu-accordion__panel[data-starting-style],
+  .gu-accordion__panel[data-ending-style] {
+    height: 0;
+  }
+
+  .gu-accordion__content {
+    padding: 0 var(--gu-space-5) var(--gu-space-5);
+    line-height: var(--gu-leading-normal);
+    color: var(--gu-ink-muted);
+  }
+}
