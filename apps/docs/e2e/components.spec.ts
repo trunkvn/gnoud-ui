@@ -360,3 +360,163 @@ test.describe("Skeleton", () => {
     await expect(page.locator(".gu-skeleton").first()).toHaveCSS("animation-name", "none");
   });
 });
+
+test.describe("Avatar", () => {
+  test("a loading picture shows; a missing one falls back to initials; each keeps its name", async ({ page }) => {
+    await page.goto("/docs/components/avatar");
+    const row = section(page, "Picture and initials");
+
+    const ada = row.getByRole("img", { name: "Ada Lovelace" });
+    await expect(ada.locator("img")).toBeVisible();
+    expect(await ada.locator("img").evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+
+    await expect(row.getByRole("img", { name: "Nguyễn Đại Dương" })).toContainText("ND");
+
+    const turing = row.getByRole("img", { name: "Alan Turing" });
+    await expect(turing).toContainText("AT");
+    await expect(turing.locator("img")).toHaveCount(0);
+  });
+
+  test("sizes are 2, 2.5, 3.5 and 5rem, and a group overlaps", async ({ page }) => {
+    await page.goto("/docs/components/avatar");
+    const sizes = section(page, "Sizes and shapes").locator(".gu-avatar");
+    for (const [i, px] of [32, 40, 56, 80].entries()) {
+      const box = (await sizes.nth(i).boundingBox())!;
+      expect(Math.round(box.width), `size ${i}`).toBe(px);
+      expect(Math.round(box.height), `size ${i}`).toBe(px);
+    }
+    await expect(sizes.nth(3)).toHaveCSS("border-top-left-radius", "2px");
+    await expect(sizes.nth(0)).toHaveCSS("border-top-left-radius", /^\d{3,}|e\+/);
+
+    const group = page.getByRole("group", { name: "Reviewers" }).locator(".gu-avatar");
+    const [a, b] = [(await group.nth(0).boundingBox())!, (await group.nth(1).boundingBox())!];
+    expect(b.x).toBeLessThan(a.x + a.width);
+  });
+});
+
+test.describe("Toast", () => {
+  const toasts = (page: import("@playwright/test").Page) => page.locator(".gu-toast");
+
+  test("appears in the bottom-right corner with its title and description", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Show a toast" }).click();
+    const toast = toasts(page).first();
+    await expect(toast.locator(".gu-toast__title")).toHaveText("Saved");
+    await expect(toast.locator(".gu-toast__description")).toHaveText("Your changes are live.");
+
+    const [box, view] = [(await toast.boundingBox())!, page.viewportSize()!];
+    expect(view.width - (box.x + box.width)).toBeLessThan(40);
+    expect(view.height - (box.y + box.height)).toBeLessThan(40);
+    expect(box.x).toBeGreaterThan(view.width / 2);
+  });
+
+  test("dismisses itself after its timeout, and stays when the timeout is 0", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Short timeout (1.5s)" }).click();
+    await expect(toasts(page)).toHaveCount(1);
+    await expect(toasts(page)).toHaveCount(0, { timeout: 6000 });
+
+    await page.getByRole("button", { name: "Stay until dismissed" }).click();
+    await expect(toasts(page)).toHaveCount(1);
+    await page.waitForTimeout(2500);
+    await expect(toasts(page)).toHaveCount(1);
+    await toasts(page).first().locator(".gu-toast__close").click();
+    await expect(toasts(page)).toHaveCount(0);
+  });
+
+  test("F6 moves keyboard focus into the notifications region", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Stay until dismissed" }).click();
+    await expect(toasts(page)).toHaveCount(1);
+    await page.keyboard.press("F6");
+    await expect(page.locator(".gu-toast-viewport")).toBeFocused();
+    await expect(page.getByRole("region", { name: "Notifications" })).toHaveCount(1);
+  });
+
+  test("the variant colours the rule; danger is announced through an alert", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Success", exact: true }).click();
+    await expect(toasts(page).first()).toHaveCSS("border-left-color", "rgb(47, 107, 58)");
+    await page.getByRole("button", { name: "Danger", exact: true }).click();
+    await expect(page.locator('.gu-toast[data-variant="danger"]')).toHaveCSS("border-left-color", "rgb(168, 50, 31)");
+    await expect(page.getByRole("alert").filter({ hasText: "Payment failed" })).toHaveCount(1);
+  });
+
+  test("an action button runs, and the newest toast sits nearest the corner", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Delete a message" }).click();
+    await expect(toasts(page)).toHaveCount(1);
+    await page.locator(".gu-toast__action").click();
+    await expect(page.locator(".gu-toast__title", { hasText: "Restored" })).toBeVisible();
+
+    const rows = await toasts(page).evaluateAll((els) => els.filter((e) => !e.hasAttribute("data-ending-style")).map((e) => ({ title: e.querySelector(".gu-toast__title")!.textContent, bottom: e.getBoundingClientRect().bottom })));
+    const restored = rows.find((r) => r.title === "Restored");
+    if (rows.length > 1) expect(restored!.bottom).toBeGreaterThanOrEqual(Math.max(...rows.map((r) => r.bottom)) - 1);
+  });
+
+  test("has no WCAG 2.2 AA violations while a toast is showing", async ({ page }) => {
+    const { default: AxeBuilder } = await import("@axe-core/playwright");
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Stay until dismissed" }).click();
+    await expect(toasts(page)).toHaveCount(1);
+    await page.waitForTimeout(500);
+    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+    expect(results.violations.map((v) => ({ rule: v.id, nodes: v.nodes.slice(0, 2).map((n) => n.target.join(" ")) }))).toEqual([]);
+  });
+});
+
+test.describe("Toast: what the docs promise", () => {
+  const toasts = (page: import("@playwright/test").Page) => page.locator(".gu-toast");
+
+  test("a promise toast loads, then becomes success, in place; and a rejection becomes danger", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Save (succeeds)" }).click();
+    await expect(toasts(page)).toHaveCount(1);
+    await expect(toasts(page).first()).toHaveAttribute("data-variant", "loading");
+    await expect(toasts(page).first().locator(".gu-toast__title")).toHaveText("Saving draft…");
+    // it stays while pending (the demo takes 1.8 seconds), then turns into the same toast's success
+    await expect(toasts(page).first().locator(".gu-toast__title")).toHaveText("Saved draft.md", { timeout: 5000 });
+    await expect(toasts(page).first()).toHaveAttribute("data-variant", "success");
+    await expect(toasts(page)).toHaveCount(1);
+
+    await page.getByRole("button", { name: "Save (fails)" }).click();
+    await expect(page.locator('.gu-toast[data-variant="danger"] .gu-toast__description')).toHaveText("The server said no.", { timeout: 5000 });
+    await expect(page.getByRole("alert").filter({ hasText: "Could not save" })).toHaveCount(1);
+  });
+
+  test("hovering a toast pauses its countdown; leaving restarts it", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Short timeout (1.5s)" }).click();
+    const toast = toasts(page).first();
+    await expect(toast).toBeVisible();
+    await toast.hover();
+    await page.waitForTimeout(3000); // twice its 1.5s timeout
+    await expect(toasts(page)).toHaveCount(1);
+    await page.mouse.move(5, 5);
+    await expect(toasts(page)).toHaveCount(0, { timeout: 8000 });
+  });
+
+  test("swiping a toast to the right dismisses it", async ({ page }) => {
+    await page.goto("/docs/components/toast");
+    await page.getByRole("button", { name: "Stay until dismissed" }).click();
+    const toast = toasts(page).first();
+    await expect(toast).toBeVisible();
+    const box = (await toast.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    for (let i = 1; i <= 12; i++) await page.mouse.move(box.x + box.width / 2 + i * 20, box.y + box.height / 2);
+    await page.mouse.up();
+    await expect(toasts(page)).toHaveCount(0, { timeout: 5000 });
+  });
+});
+
+test.describe("AvatarGroup max", () => {
+  test("folds the rest into a '+N' avatar that is named 'N more'", async ({ page }) => {
+    await page.goto("/docs/components/avatar");
+    const group = page.getByRole("group", { name: "Six reviewers" });
+    await expect(group.getByRole("img")).toHaveCount(4);
+    await expect(group.getByRole("img", { name: "3 more" })).toContainText("+3");
+    await expect(group.getByRole("img", { name: "Linus Torvalds" })).toHaveCount(0);
+    expect(Math.round((await group.getByRole("img").first().boundingBox())!.width)).toBe(56);
+  });
+});
