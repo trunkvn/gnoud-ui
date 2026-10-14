@@ -5,7 +5,7 @@ hard offset shadows, in light and dark. Plain CSS, no runtime styling, themeable
 variables. Native elements where they are enough, [Base UI](https://base-ui.com) where behaviour
 is hard.
 
-- **18 components:** Accordion, Alert, Badge, Button, Card, Checkbox, Dialog, Input, Menu, Popover, Progress, Radio, Select, Skeleton, Switch, Tabs, Textarea, Tooltip
+- **20 components:** Accordion, Alert, Avatar, Badge, Button, Card, Checkbox, Dialog, Input, Menu, Popover, Progress, Radio, Select, Skeleton, Switch, Tabs, Textarea, Toast, Tooltip
 - **Accessible by default:** keyboard support, focus management, ARIA, and every colour pair checked against WCAG AA in both themes
 - **Light and dark:** follows the OS, or force it with `data-theme`
 - **Server Components ready:** interactive components are marked `"use client"`

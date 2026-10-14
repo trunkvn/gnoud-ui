@@ -50,6 +50,7 @@ const html = (el) => renderToString(el);
 const cases = {
   Accordion: () => h(UI.Accordion, null, h(UI.AccordionItem, { value: "a" }, h(UI.AccordionTrigger, null, "Q"), h(UI.AccordionPanel, null, "A"))),
   Alert: () => h(UI.Alert, { variant: "danger" }, h(UI.AlertTitle, null, "t"), h(UI.AlertDescription, null, "d")),
+  Avatar: () => h(UI.AvatarGroup, { "aria-label": "Team", max: 1 }, h(UI.Avatar, { alt: "Ada Lovelace" }), h(UI.Avatar, { alt: "Alan Turing", size: "lg", shape: "square" })),
   Badge: () => h(UI.Badge, { variant: "accent" }, "New"),
   Button: () => h(UI.Button, { variant: "primary", size: "lg", loading: true }, "Go"),
   Card: () => h(UI.Card, null, h(UI.CardHeader, null, h(UI.CardLabel, null, "l"), h(UI.CardTitle, null, "t"), h(UI.CardDescription, null, "d")), h(UI.CardContent, null, "c"), h(UI.CardFooter, null, "f")),
@@ -65,6 +66,7 @@ const cases = {
   Switch: () => h(UI.Switch, { label: "On" }),
   Tabs: () => h(UI.Tabs, { defaultValue: "a" }, h(UI.TabsList, null, h(UI.TabsTab, { value: "a" }, "A")), h(UI.TabsPanel, { value: "a" }, "pa")),
   Textarea: () => h(UI.Textarea, { "aria-label": "x" }),
+  Toast: () => h(UI.ToastProvider, { position: "top-right" }, h("p", null, "app")),
   Tooltip: () => h(UI.Tooltip, { content: "Hi" }, h(UI.Button, null, "Hover")),
 };
 let failed = 0;
@@ -100,11 +102,18 @@ check(css.includes("--gu-accent") && css.includes(".gu-button") && css.includes(
 // ---- 4. types: a consumer's TypeScript accepts the API (both common resolution modes)
 writeFileSync(join(app, "check.tsx"), `
 import "@gnoud-ui/react/styles.css";
-import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger, Button, Card, CardTitle, Checkbox, Dialog, DialogContent, DialogTitle, DialogTrigger, Input, Menu, MenuContent, MenuItem, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Progress, Radio, RadioGroup, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Skeleton, Switch, Tabs, TabsList, TabsPanel, TabsTab, Tooltip } from "@gnoud-ui/react";
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger, Button, Card, CardTitle, Checkbox, Dialog, DialogContent, DialogTitle, DialogTrigger, Input, Menu, MenuContent, MenuItem, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Progress, Radio, RadioGroup, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Skeleton, Switch, Tabs, TabsList, TabsPanel, TabsTab, Avatar, AvatarGroup, ToastProvider, useToast, initialsOf, Tooltip } from "@gnoud-ui/react";
 import type { ButtonProps, InputProps } from "@gnoud-ui/react";
 
 const buttonProps: ButtonProps = { variant: "primary", size: "sm", loading: false };
 const inputProps: InputProps = { size: "lg", invalid: true, type: "email" };
+
+function Notify() {
+  const toast = useToast();
+  const id: string = toast.add({ title: "Saved", variant: "success", action: { label: "Undo", onClick: () => toast.close(initialsOf("a b")) } });
+  void toast.promise(Promise.resolve(1), { loading: "x", success: (n: number) => ({ title: String(n), variant: "success" }), error: "no" });
+  return <button onClick={() => toast.close(id)}>x</button>;
+}
 
 export const tree = (
   <Card variant="flat">
@@ -127,6 +136,8 @@ export const tree = (
     <Menu><MenuTrigger render={<Button />}>Open</MenuTrigger><MenuContent><MenuItem onClick={() => {}}>x</MenuItem></MenuContent></Menu>
     <Progress label="Upload" value={40} showValue />
     <Skeleton shape="circle" />
+    <AvatarGroup aria-label="Team" max={2} size="lg"><Avatar alt="Ada Lovelace" src="/a.png" /></AvatarGroup>
+    <ToastProvider position="top-right" limit={2}><Notify /></ToastProvider>
   </Card>
 );
 
