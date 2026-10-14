@@ -1,0 +1,195 @@
+@layer gnoud-ui {
+  /*
+   * The stack. Base UI lists the newest toast first, so top corners stack in that order and
+   * bottom corners reverse it: either way the newest toast sits nearest its corner.
+   */
+  .gu-toast-viewport {
+    position: fixed;
+    z-index: var(--gu-z-popup);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gu-space-3);
+    width: min(24rem, calc(100vw - 2rem));
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  .gu-toast-viewport[data-position="bottom-right"] {
+    right: var(--gu-space-4);
+    bottom: var(--gu-space-4);
+    flex-direction: column-reverse;
+  }
+  .gu-toast-viewport[data-position="bottom-left"] {
+    bottom: var(--gu-space-4);
+    left: var(--gu-space-4);
+    flex-direction: column-reverse;
+  }
+  .gu-toast-viewport[data-position="top-right"] {
+    top: var(--gu-space-4);
+    right: var(--gu-space-4);
+  }
+  .gu-toast-viewport[data-position="top-left"] {
+    top: var(--gu-space-4);
+    left: var(--gu-space-4);
+  }
+  .gu-toast-viewport:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  /* A raised card with a coloured rule on the left, like the alert: the words carry the meaning. */
+  .gu-toast {
+    --gu-toast-rule: var(--gu-accent);
+
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding: var(--gu-space-4) var(--gu-space-5);
+    padding-right: var(--gu-space-7);
+
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-left: 4px solid var(--gu-toast-rule);
+    border-radius: var(--gu-radius-md);
+    box-shadow: var(--gu-shadow-md);
+    pointer-events: auto;
+
+    transform: translateX(var(--toast-swipe-movement-x, 0)) translateY(var(--toast-swipe-movement-y, 0));
+    transition:
+      opacity var(--gu-duration-base) var(--gu-ease-standard),
+      transform var(--gu-duration-base) var(--gu-ease-standard);
+  }
+  .gu-toast[data-variant="success"] {
+    --gu-toast-rule: var(--gu-success);
+  }
+  .gu-toast[data-variant="warning"] {
+    --gu-toast-rule: var(--gu-accent-2);
+  }
+  .gu-toast[data-variant="danger"] {
+    --gu-toast-rule: var(--gu-danger);
+  }
+  .gu-toast[data-variant="loading"] {
+    --gu-toast-rule: var(--gu-ink-muted);
+  }
+  /* A pending promise: a small turning ring before the title. Slower, not frozen, with reduced motion. */
+  .gu-toast[data-variant="loading"] .gu-toast__title::before {
+    content: "";
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: var(--gu-space-2);
+    vertical-align: -0.05em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: var(--gu-radius-full);
+    animation: gu-toast-spin 800ms linear infinite;
+  }
+  @keyframes gu-toast-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gu-toast[data-variant="loading"] .gu-toast__title::before {
+      animation-duration: 2400ms;
+    }
+  }
+
+  .gu-toast[data-starting-style] {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  .gu-toast[data-ending-style] {
+    opacity: 0;
+    transform: translateX(var(--toast-swipe-movement-x, 0)) translateY(0.5rem);
+  }
+  /* while a finger or pointer drags it, follow without easing */
+  .gu-toast[data-swiping] {
+    transition: none;
+  }
+  /* beyond the limit: kept, but out of sight until there is room */
+  .gu-toast[data-limited] {
+    display: none;
+  }
+
+  .gu-toast__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gu-space-1);
+  }
+  .gu-toast__title {
+    margin: 0;
+    font-weight: var(--gu-weight-medium);
+    line-height: var(--gu-leading-snug);
+  }
+  .gu-toast__description {
+    margin: 0;
+    font-size: var(--gu-text-sm);
+    line-height: var(--gu-leading-normal);
+    color: var(--gu-ink-muted);
+  }
+
+  .gu-toast__action {
+    align-self: flex-start;
+    min-height: 1.75rem;
+    margin-top: var(--gu-space-2);
+    padding: 0 var(--gu-space-3);
+
+    font: inherit;
+    font-size: var(--gu-text-sm);
+    font-weight: var(--gu-weight-medium);
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-shadow-sm);
+    cursor: pointer;
+    transition:
+      transform var(--gu-duration-fast) var(--gu-ease-stamp),
+      box-shadow var(--gu-duration-fast) var(--gu-ease-stamp);
+  }
+  .gu-toast__action:active {
+    transform: translate(1px, 1px);
+    box-shadow: var(--gu-shadow-pressed);
+  }
+  .gu-toast__action:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  .gu-toast__close {
+    position: absolute;
+    top: var(--gu-space-2);
+    right: var(--gu-space-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    color: var(--gu-ink);
+    background: transparent;
+    border: 0;
+    border-radius: var(--gu-radius-sm);
+    cursor: pointer;
+  }
+  .gu-toast__close svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: square;
+  }
+  @media (hover: hover) {
+    .gu-toast__close:hover {
+      background: var(--gu-tint);
+    }
+  }
+  .gu-toast__close:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: 0;
+  }
+}
