@@ -30,6 +30,8 @@ export const nav: NavSection[] = [
         "Stacked sections that open and close, one at a time or several. Each header is a real button inside a heading. Built on Base UI." },
       { title: "Alert", href: "/docs/components/alert", description:
         "An inline message set like a margin note, with info, success, warning and danger variants and the right live-region role for each." },
+      { title: "Avatar", href: "/docs/components/avatar", description:
+        "A person's picture that falls back to their initials when the image is missing or fails to load. Named for screen readers. Built on Base UI." },
       { title: "Badge", href: "/docs/components/badge", description:
         "A small stamped label in five variants: static text in the same tracked uppercase as every eyebrow in the system." },
       { title: "Button", href: "/docs/components/button", description:
@@ -60,6 +62,8 @@ export const nav: NavSection[] = [
         "Accessible tabs with roving focus and arrow-key navigation, horizontal or vertical. The selected tab is inked in. Built on Base UI." },
       { title: "Textarea", href: "/docs/components/textarea", description:
         "The multi-line sibling of Input: flat, ruled, resizable, with an invalid state and the same labelling rules." },
+      { title: "Toast", href: "/docs/components/toast", description:
+        "Short messages that appear in a corner and go away by themselves, announced to screen readers and reachable with F6. Built on Base UI." },
       { title: "Tooltip", href: "/docs/components/tooltip", description:
         "A short visual hint that opens on hover and keyboard focus and closes with Escape. Built on Base UI. Not announced to screen readers." },
     ],

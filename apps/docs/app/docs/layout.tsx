@@ -1,3 +1,4 @@
+import { ToastProvider } from "@gnoud-ui/react";
 import { DocsNav } from "@/components/docs-nav";
 import { Pager } from "@/components/pager";
 
@@ -10,7 +11,8 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         </div>
       </aside>
       <main id="main" className="min-w-0 max-w-3xl">
-        {children}
+        {/* One provider near the root, as recommended: the Toast examples use it. */}
+        <ToastProvider>{children}</ToastProvider>
         <Pager />
       </main>
     </div>
