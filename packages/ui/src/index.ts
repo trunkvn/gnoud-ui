@@ -6,6 +6,9 @@ export type { AccordionItemProps, AccordionPanelProps, AccordionProps, Accordion
 export { Alert, AlertDescription, AlertTitle } from "./components/alert/alert";
 export type { AlertProps, AlertVariant } from "./components/alert/alert";
 
+export { Avatar, AvatarGroup, initialsOf } from "./components/avatar/avatar";
+export type { AvatarGroupProps, AvatarProps, AvatarShape, AvatarSize } from "./components/avatar/avatar";
+
 export { Badge } from "./components/badge/badge";
 export type { BadgeProps, BadgeVariant } from "./components/badge/badge";
 

@@ -1,0 +1,71 @@
+@layer gnoud-ui {
+  /* Flat, not raised: an avatar is not something you press. */
+  .gu-avatar {
+    --gu-avatar-size: 2.5rem;
+
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--gu-avatar-size);
+    height: var(--gu-avatar-size);
+    overflow: hidden;
+    vertical-align: middle;
+
+    font-family: var(--gu-font-display);
+    font-size: calc(var(--gu-avatar-size) * 0.4);
+    font-weight: var(--gu-weight-bold);
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--gu-ink);
+    background: var(--gu-tint);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-full);
+    user-select: none;
+  }
+  .gu-avatar[data-shape="square"] {
+    border-radius: var(--gu-radius-sm);
+  }
+
+  .gu-avatar[data-size="sm"] {
+    --gu-avatar-size: 2rem;
+  }
+  .gu-avatar[data-size="lg"] {
+    --gu-avatar-size: 3.5rem;
+  }
+  .gu-avatar[data-size="xl"] {
+    --gu-avatar-size: 5rem;
+  }
+
+  .gu-avatar__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gu-avatar__fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /*
+   * A row of them, each overlapping the last by about a fifth (enough to read as a stack, not
+   * enough to cover the initials), cut out of the one beneath with a ring in the page's colour.
+   * Set --gu-avatar-ring if the group sits on a surface that is not the page background.
+   */
+  .gu-avatar-group {
+    display: inline-flex;
+    align-items: center;
+  }
+  .gu-avatar-group > .gu-avatar + .gu-avatar {
+    margin-left: calc(var(--gu-avatar-size, 2.5rem) * -0.2);
+    box-shadow: 0 0 0 2px var(--gu-avatar-ring, var(--gu-bg));
+  }
+}
