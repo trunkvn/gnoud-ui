@@ -133,3 +133,21 @@ test.describe("WCAG 2.2: Focus Not Obscured (2.4.11)", () => {
     });
   }
 });
+
+test.describe("sidebar scrolling", () => {
+  test("the sidebar and phone menu scroll without showing a scrollbar", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 520 });
+    await page.goto("/docs/components/button");
+    const sidebar = page.locator("aside > div");
+    await expect(sidebar).toHaveCSS("scrollbar-width", "none");
+    const before = await sidebar.evaluate((el) => ({ scrollable: el.scrollHeight > el.clientHeight, top: el.scrollTop }));
+    expect(before.scrollable).toBe(true);
+    await sidebar.hover();
+    await page.mouse.wheel(0, 400);
+    await expect.poll(() => sidebar.evaluate((el) => el.scrollTop)).toBeGreaterThan(before.top);
+
+    await page.setViewportSize({ width: 390, height: 520 });
+    await page.locator("details.mobile-nav summary").click();
+    await expect(page.locator(".mobile-nav__panel")).toHaveCSS("scrollbar-width", "none");
+  });
+});

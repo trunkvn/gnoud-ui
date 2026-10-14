@@ -61,6 +61,14 @@ body {
   }
 }
 
+/* Scrolls as usual, but without a scrollbar: the sidebar and the phone menu are lists you just move through. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .nav-link {
   display: block;
   padding: 0.3rem 0.75rem;
@@ -93,6 +101,9 @@ body {
   border-radius: var(--gu-radius-sm);
   background: var(--gu-surface);
 }
+.mobile-nav__panel::-webkit-scrollbar {
+  display: none;
+}
 .mobile-nav__summary::-webkit-details-marker {
   display: none;
 }
@@ -104,6 +115,7 @@ body {
   max-height: calc(100vh - 4rem);
   padding: 1.5rem 1.25rem 2rem;
   overflow-y: auto;
+  scrollbar-width: none;
   background: var(--gu-bg);
   border-bottom: 1px solid var(--gu-line);
 }
