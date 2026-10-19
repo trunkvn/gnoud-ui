@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
-    "turbo": "^2.11.7",
+    "turbo": "^2.11.8",
     "typescript": "^5"
   },
   "description": "gnoud-ui monorepo: the @gnoud-ui/react component library and its documentation site.",
