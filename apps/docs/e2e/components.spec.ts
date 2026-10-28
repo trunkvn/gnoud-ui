@@ -540,3 +540,26 @@ test.describe("Meter", () => {
     expect(fill!.width / (track!.width - 3)).toBeCloseTo(0.72, 1);
   });
 });
+
+test.describe("Toggle", () => {
+  test("pressing a toggle inks it in with the accent colour", async ({ page }) => {
+    await page.goto("/docs/components/toggle");
+    const italic = page.getByRole("button", { name: "Italic", exact: true }).first();
+    await expect(italic).toHaveAttribute("aria-pressed", "false");
+    await italic.click();
+    await expect(italic).toHaveAttribute("aria-pressed", "true");
+    await expect(italic).toHaveCSS("background-color", "rgb(43, 63, 143)");
+  });
+
+  test("a single-choice group presses one at a time, and arrow keys move focus through it", async ({ page }) => {
+    await page.goto("/docs/components/toggle");
+    const group = page.getByRole("group", { name: "Text alignment" });
+    await group.getByRole("button", { name: "Right" }).click();
+    await expect(group.getByRole("button", { name: "Right" })).toHaveAttribute("aria-pressed", "true");
+    await expect(group.getByRole("button", { name: "Left" })).toHaveAttribute("aria-pressed", "false");
+
+    await group.getByRole("button", { name: "Right" }).focus();
+    await page.keyboard.press("ArrowLeft");
+    await expect(group.getByRole("button", { name: "Center" })).toBeFocused();
+  });
+});
