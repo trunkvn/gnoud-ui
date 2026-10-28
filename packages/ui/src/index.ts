@@ -6,6 +6,18 @@ export type { AccordionItemProps, AccordionPanelProps, AccordionProps, Accordion
 export { Alert, AlertDescription, AlertTitle } from "./components/alert/alert";
 export type { AlertProps, AlertVariant } from "./components/alert/alert";
 
+export {
+  AlertDialog,
+  AlertDialogClose,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./components/alert-dialog/alert-dialog";
+export type { AlertDialogContentProps } from "./components/alert-dialog/alert-dialog";
+
 export { Avatar, AvatarGroup, initialsOf } from "./components/avatar/avatar";
 export type { AvatarGroupProps, AvatarProps, AvatarShape, AvatarSize } from "./components/avatar/avatar";
 
