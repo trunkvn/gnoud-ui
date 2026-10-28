@@ -563,3 +563,27 @@ test.describe("Toggle", () => {
     await expect(group.getByRole("button", { name: "Center" })).toBeFocused();
   });
 });
+
+test.describe("Slider", () => {
+  test("the arrow keys move the thumb, and dragging the block moves the fill", async ({ page }) => {
+    await page.goto("/docs/components/slider");
+    const volume = page.getByRole("slider", { name: "Volume" });
+    await volume.focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(volume).toHaveAttribute("aria-valuenow", "41");
+
+    const control = page.locator(".gu-slider__control").first();
+    const [box, thumb] = [(await control.boundingBox())!, (await page.locator(".gu-slider__thumb").first().boundingBox())!];
+    await page.mouse.move(thumb.x + thumb.width / 2, thumb.y + thumb.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width * 0.9, box.y + box.height / 2, { steps: 6 });
+    await page.mouse.up();
+    expect(Number(await volume.getAttribute("aria-valuenow"))).toBeGreaterThan(80);
+  });
+
+  test("a range has two thumbs with their own names", async ({ page }) => {
+    await page.goto("/docs/components/slider");
+    await expect(page.getByRole("slider", { name: "Minimum price" })).toHaveAttribute("aria-valuenow", "20");
+    await expect(page.getByRole("slider", { name: "Maximum price" })).toHaveAttribute("aria-valuenow", "80");
+  });
+});
