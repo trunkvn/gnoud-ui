@@ -68,6 +68,8 @@ export const nav: NavSection[] = [
         "The multi-line sibling of Input: flat, ruled, resizable, with an invalid state and the same labelling rules." },
       { title: "Toast", href: "/docs/components/toast", description:
         "Short messages that appear in a corner and go away by themselves, announced to screen readers and reachable with F6. Built on Base UI." },
+      { title: "Toggle", href: "/docs/components/toggle", description:
+        "A button that stays pressed, singly or grouped into one strip to pick one or many options. Exposed with aria-pressed. Built on Base UI." },
       { title: "Tooltip", href: "/docs/components/tooltip", description:
         "A short visual hint that opens on hover and keyboard focus and closes with Escape. Built on Base UI. Not announced to screen readers." },
     ],
