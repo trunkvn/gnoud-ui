@@ -587,3 +587,35 @@ test.describe("Slider", () => {
     await expect(page.getByRole("slider", { name: "Maximum price" })).toHaveAttribute("aria-valuenow", "80");
   });
 });
+
+test.describe("Alert dialog", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/docs/components/alert-dialog");
+  });
+
+  test("is an alert dialog that a click on the veil does not dismiss", async ({ page }) => {
+    const trigger = page.getByRole("button", { name: "Delete account" });
+    await trigger.click();
+    const dialog = page.getByRole("alertdialog", { name: "Delete your account?" });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAccessibleDescription(/cannot be undone/);
+    await expect(dialog.getByRole("button", { name: "Close" })).toHaveCount(0);
+
+    await page.mouse.click(6, 400);
+    await expect(dialog).toBeVisible();
+  });
+
+  test("closes with Escape or a choice, and returns focus to the trigger", async ({ page }) => {
+    const trigger = page.getByRole("button", { name: "Delete account" });
+    await trigger.click();
+    const dialog = page.getByRole("alertdialog");
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+
+    await trigger.click();
+    await dialog.getByRole("button", { name: "Keep account" }).click();
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+});
