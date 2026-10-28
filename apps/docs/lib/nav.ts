@@ -46,6 +46,8 @@ export const nav: NavSection[] = [
         "A flat, ruled text field on a plain input element, with sizes, an invalid state and full support for browser autofill and forms." },
       { title: "Menu", href: "/docs/components/menu", description:
         "A dropdown list of actions with checkbox and radio items, groups and links. Arrow keys, typeahead and Escape. Built on Base UI." },
+      { title: "Meter", href: "/docs/components/meter", description:
+        "A gauge for a value within a known range, such as disk space. Not about finishing work: that is Progress. Announced as a meter." },
       { title: "Popover", href: "/docs/components/popover", description:
         "A floating panel anchored to a button, for extra content or a small form. Closes on Escape or an outside click. Built on Base UI." },
       { title: "Progress", href: "/docs/components/progress", description:
