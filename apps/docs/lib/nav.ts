@@ -54,6 +54,8 @@ export const nav: NavSection[] = [
         "Radio buttons for choosing exactly one option, in a group with arrow-key navigation. Round, so it never reads as a checkbox. Built on Base UI." },
       { title: "Select", href: "/docs/components/select", description:
         "Pick one value from a list: a flat trigger, a raised list with highlighted items, groups, typeahead and form submission. Built on Base UI." },
+      { title: "Separator", href: "/docs/components/separator", description:
+        "A thin ruled line between groups of content, horizontal or vertical, exposed as a separator to assistive technology. Built on Base UI." },
       { title: "Skeleton", href: "/docs/components/skeleton", description:
         "A hatched placeholder for content that is still loading. Decorative and hidden from screen readers; pairs with aria-busy on its container." },
       { title: "Switch", href: "/docs/components/switch", description:
