@@ -83,6 +83,9 @@ export {
   SelectValue,
 } from "./components/select/select";
 
+export { Separator } from "./components/separator/separator";
+export type { SeparatorProps } from "./components/separator/separator";
+
 export { Skeleton } from "./components/skeleton/skeleton";
 export type { SkeletonProps, SkeletonShape } from "./components/skeleton/skeleton";
 
