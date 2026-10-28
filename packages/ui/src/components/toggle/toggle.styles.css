@@ -1,0 +1,112 @@
+@layer gnoud-ui {
+  .gu-toggle {
+    --gu-toggle-height: 2.5rem;
+    --gu-toggle-padding-x: var(--gu-space-4);
+
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gu-space-2);
+    min-width: var(--gu-toggle-height);
+    min-height: var(--gu-toggle-height);
+    padding: 0 var(--gu-toggle-padding-x);
+
+    font-family: var(--gu-font-body);
+    font-size: var(--gu-text-md);
+    font-weight: var(--gu-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    color: var(--gu-ink);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-shadow-sm);
+    cursor: pointer;
+
+    transition:
+      transform var(--gu-duration-fast) var(--gu-ease-stamp),
+      box-shadow var(--gu-duration-fast) var(--gu-ease-stamp),
+      background-color var(--gu-duration-fast) var(--gu-ease-standard);
+  }
+  .gu-toggle[data-size="sm"] {
+    --gu-toggle-height: 2rem;
+    --gu-toggle-padding-x: var(--gu-space-3);
+    font-size: var(--gu-text-sm);
+  }
+  .gu-toggle[data-size="lg"] {
+    --gu-toggle-height: 3rem;
+    --gu-toggle-padding-x: var(--gu-space-5);
+  }
+
+  .gu-toggle svg {
+    flex-shrink: 0;
+    width: 1.125em;
+    height: 1.125em;
+  }
+
+  @media (hover: hover) {
+    .gu-toggle:not([data-disabled]):not([data-pressed]):hover {
+      background: var(--gu-tint);
+    }
+  }
+
+  /* Pressed: inked in and sunk into the paper, and it stays that way. */
+  .gu-toggle[data-pressed] {
+    color: var(--gu-accent-ink);
+    background: var(--gu-accent);
+    transform: translate(1px, 1px);
+    box-shadow: var(--gu-shadow-pressed);
+  }
+
+  .gu-toggle:focus-visible {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+
+  .gu-toggle[data-disabled] {
+    color: var(--gu-ink-muted);
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  .gu-toggle[data-disabled][data-pressed] {
+    color: var(--gu-tint);
+    background: var(--gu-ink-muted);
+    transform: none;
+  }
+
+  /* A group is one strip with shared edges, like Tabs. */
+  .gu-toggle-group {
+    display: inline-flex;
+    max-width: 100%;
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-shadow-sm);
+  }
+  .gu-toggle-group[data-orientation="vertical"] {
+    flex-direction: column;
+    align-self: flex-start;
+  }
+  .gu-toggle-group .gu-toggle {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+  }
+  .gu-toggle-group .gu-toggle + .gu-toggle {
+    border-left: var(--gu-line-width) solid var(--gu-line);
+  }
+  .gu-toggle-group[data-orientation="vertical"] .gu-toggle + .gu-toggle {
+    border-left: 0;
+    border-top: var(--gu-line-width) solid var(--gu-line);
+  }
+  .gu-toggle-group .gu-toggle:focus-visible {
+    outline-offset: -3px;
+  }
+}

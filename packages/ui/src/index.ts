@@ -101,5 +101,8 @@ export type { TextareaProps } from "./components/textarea/textarea";
 export { ToastProvider, useToast } from "./components/toast/toast";
 export type { ToastMessage, ToastOptions, ToastPosition, ToastPromiseMessages, ToastProviderProps, ToastVariant } from "./components/toast/toast";
 
+export { Toggle, ToggleGroup } from "./components/toggle/toggle";
+export type { ToggleGroupProps, ToggleProps, ToggleSize } from "./components/toggle/toggle";
+
 export { Tooltip, TooltipProvider } from "./components/tooltip/tooltip";
 export type { TooltipProps } from "./components/tooltip/tooltip";
