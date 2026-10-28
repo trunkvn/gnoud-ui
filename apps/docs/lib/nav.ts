@@ -60,6 +60,8 @@ export const nav: NavSection[] = [
         "A thin ruled line between groups of content, horizontal or vertical, exposed as a separator to assistive technology. Built on Base UI." },
       { title: "Skeleton", href: "/docs/components/skeleton", description:
         "A hatched placeholder for content that is still loading. Decorative and hidden from screen readers; pairs with aria-busy on its container." },
+      { title: "Slider", href: "/docs/components/slider", description:
+        "Pick a number or a range by dragging a block along a ruled line or with the arrow keys. Submits with forms. Built on Base UI." },
       { title: "Switch", href: "/docs/components/switch", description:
         "A switch for settings that apply immediately: a block of ink slides across the track. Built on Base UI with full keyboard support." },
       { title: "Tabs", href: "/docs/components/tabs", description:
