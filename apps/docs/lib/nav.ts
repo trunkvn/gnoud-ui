@@ -30,6 +30,8 @@ export const nav: NavSection[] = [
         "Stacked sections that open and close, one at a time or several. Each header is a real button inside a heading. Built on Base UI." },
       { title: "Alert", href: "/docs/components/alert", description:
         "An inline message set like a margin note, with info, success, warning and danger variants and the right live-region role for each." },
+      { title: "Alert dialog", href: "/docs/components/alert-dialog", description:
+        "A dialog that interrupts to ask for a decision, like confirming a deletion. Announced as an alert dialog; the veil does not dismiss it." },
       { title: "Avatar", href: "/docs/components/avatar", description:
         "A person's picture that falls back to their initials when the image is missing or fails to load. Named for screen readers. Built on Base UI." },
       { title: "Badge", href: "/docs/components/badge", description:
