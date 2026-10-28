@@ -520,3 +520,13 @@ test.describe("AvatarGroup max", () => {
     expect(Math.round((await group.getByRole("img").first().boundingBox())!.width)).toBe(56);
   });
 });
+
+test.describe("Separator", () => {
+  test("vertical separators draw a line as tall as their row", async ({ page }) => {
+    await page.goto("/docs/components/separator");
+    const rule = page.locator('.gu-separator[data-orientation="vertical"]').first();
+    const box = (await rule.boundingBox())!;
+    expect(box.height).toBeGreaterThan(16);
+    await expect(rule).toHaveCSS("border-left-width", "1px");
+  });
+});
