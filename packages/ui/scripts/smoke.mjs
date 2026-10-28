@@ -67,6 +67,11 @@ const cases = {
   Tabs: () => h(UI.Tabs, { defaultValue: "a" }, h(UI.TabsList, null, h(UI.TabsTab, { value: "a" }, "A")), h(UI.TabsPanel, { value: "a" }, "pa")),
   Textarea: () => h(UI.Textarea, { "aria-label": "x" }),
   Toast: () => h(UI.ToastProvider, { position: "top-right" }, h("p", null, "app")),
+  AlertDialog: () => h(UI.AlertDialog, null, h(UI.AlertDialogTrigger, null, "Open"), h(UI.AlertDialogContent, null, h(UI.AlertDialogTitle, null, "t"))),
+  Meter: () => h(UI.Meter, { label: "Storage", value: 72, showValue: true }),
+  Separator: () => h(UI.Separator, { orientation: "vertical" }),
+  Slider: () => h(UI.Slider, { label: "Volume", defaultValue: [20, 80], thumbLabels: ["Min", "Max"] }),
+  Toggle: () => h(UI.ToggleGroup, { "aria-label": "Align", defaultValue: ["a"] }, h(UI.Toggle, { value: "a", size: "sm" }, "A")),
   Tooltip: () => h(UI.Tooltip, { content: "Hi" }, h(UI.Button, null, "Hover")),
 };
 let failed = 0;
@@ -102,7 +107,7 @@ check(css.includes("--gu-accent") && css.includes(".gu-button") && css.includes(
 // ---- 4. types: a consumer's TypeScript accepts the API (both common resolution modes)
 writeFileSync(join(app, "check.tsx"), `
 import "@gnoud-ui/react/styles.css";
-import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger, Button, Card, CardTitle, Checkbox, Dialog, DialogContent, DialogTitle, DialogTrigger, Input, Menu, MenuContent, MenuItem, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Progress, Radio, RadioGroup, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Skeleton, Switch, Tabs, TabsList, TabsPanel, TabsTab, Avatar, AvatarGroup, ToastProvider, useToast, initialsOf, Tooltip } from "@gnoud-ui/react";
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger, Button, Card, CardTitle, Checkbox, Dialog, DialogContent, DialogTitle, DialogTrigger, Input, Menu, MenuContent, MenuItem, MenuTrigger, Popover, PopoverContent, PopoverTrigger, Progress, Radio, RadioGroup, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Skeleton, Switch, Tabs, TabsList, TabsPanel, TabsTab, Avatar, AvatarGroup, ToastProvider, useToast, initialsOf, Tooltip, AlertDialog, AlertDialogClose, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogTitle, AlertDialogTrigger, Meter, Separator, Slider, Toggle, ToggleGroup } from "@gnoud-ui/react";
 import type { ButtonProps, InputProps } from "@gnoud-ui/react";
 
 const buttonProps: ButtonProps = { variant: "primary", size: "sm", loading: false };
@@ -137,6 +142,13 @@ export const tree = (
     <Progress label="Upload" value={40} showValue />
     <Skeleton shape="circle" />
     <AvatarGroup aria-label="Team" max={2} size="lg"><Avatar alt="Ada Lovelace" src="/a.png" /></AvatarGroup>
+    <Meter label="Storage" value={72} showValue />
+    <Separator orientation="vertical" />
+    <Slider<number[]> label="Price" defaultValue={[20, 80]} thumbLabels={["Min", "Max"]} onValueChange={(v) => void v.length} />
+    <Slider aria-label="Volume" defaultValue={40} onValueChange={(v: number) => void v} />
+    <ToggleGroup multiple aria-label="Style" onValueChange={(v: string[]) => void v}><Toggle value="b" size="lg">B</Toggle></ToggleGroup>
+    <Toggle onPressedChange={(p: boolean) => void p}>Bold</Toggle>
+    <AlertDialog><AlertDialogTrigger render={<Button />}>Delete</AlertDialogTrigger><AlertDialogContent><AlertDialogTitle>t</AlertDialogTitle><AlertDialogDescription>d</AlertDialogDescription><AlertDialogFooter><AlertDialogClose render={<Button />}>Ok</AlertDialogClose></AlertDialogFooter></AlertDialogContent></AlertDialog>
     <ToastProvider position="top-right" limit={2}><Notify /></ToastProvider>
   </Card>
 );
