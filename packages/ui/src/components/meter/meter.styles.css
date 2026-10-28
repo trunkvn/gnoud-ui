@@ -1,0 +1,44 @@
+@layer gnoud-ui {
+  .gu-meter {
+    /* Override on the element (or an ancestor) to colour the fill, e.g. --gu-meter-color: var(--gu-danger). */
+    --gu-meter-color: var(--gu-accent);
+
+    display: grid;
+    gap: var(--gu-space-2);
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+  }
+
+  .gu-meter__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gu-space-4);
+    font-size: var(--gu-text-sm);
+  }
+  .gu-meter__label {
+    font-weight: var(--gu-weight-medium);
+  }
+  .gu-meter__value {
+    font-family: var(--gu-font-mono);
+    color: var(--gu-ink-muted);
+  }
+
+  /* Same ruled trough as Progress, with tick marks so it reads as a gauge, not a task. */
+  .gu-meter__track {
+    position: relative;
+    box-sizing: border-box;
+    height: 0.75rem;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), var(--gu-line) calc(10% - 1px) 10%),
+      var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+  }
+  .gu-meter__indicator {
+    height: 100%;
+    background: var(--gu-meter-color);
+    transition: width var(--gu-duration-slow) var(--gu-ease-standard);
+  }
+}

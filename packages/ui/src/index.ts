@@ -65,6 +65,9 @@ export type { MenuContentProps } from "./components/menu/menu";
 export { Popover, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger } from "./components/popover/popover";
 export type { PopoverContentProps } from "./components/popover/popover";
 
+export { Meter } from "./components/meter/meter";
+export type { MeterProps } from "./components/meter/meter";
+
 export { Progress } from "./components/progress/progress";
 export type { ProgressProps } from "./components/progress/progress";
 
