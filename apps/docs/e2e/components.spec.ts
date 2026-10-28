@@ -530,3 +530,13 @@ test.describe("Separator", () => {
     await expect(rule).toHaveCSS("border-left-width", "1px");
   });
 });
+
+test.describe("Meter", () => {
+  test("a meter's fill matches its value", async ({ page }) => {
+    await page.goto("/docs/components/meter");
+    const meter = page.getByRole("meter", { name: "Storage used" });
+    await expect(meter).toHaveAttribute("aria-valuenow", "72");
+    const [track, fill] = [await meter.locator(".gu-meter__track").boundingBox(), await meter.locator(".gu-meter__indicator").boundingBox()];
+    expect(fill!.width / (track!.width - 3)).toBeCloseTo(0.72, 1);
+  });
+});
