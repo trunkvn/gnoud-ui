@@ -1,0 +1,108 @@
+@layer gnoud-ui {
+  .gu-slider {
+    --gu-slider-thumb: 1.5rem;
+
+    display: grid;
+    gap: var(--gu-space-2);
+    width: 100%;
+    font-family: var(--gu-font-body);
+    color: var(--gu-ink);
+  }
+  .gu-slider[data-orientation="vertical"] {
+    width: auto;
+    height: 100%;
+    min-height: 10rem;
+    justify-items: center;
+    grid-template-rows: auto 1fr;
+  }
+
+  .gu-slider__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gu-space-4);
+    font-size: var(--gu-text-sm);
+  }
+  .gu-slider__label {
+    font-weight: var(--gu-weight-medium);
+  }
+  .gu-slider__value {
+    font-family: var(--gu-font-mono);
+    color: var(--gu-ink-muted);
+  }
+
+  /* The control is the touch target: taller than the line drawn inside it. */
+  .gu-slider__control {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2rem;
+    touch-action: none;
+    user-select: none;
+  }
+  .gu-slider__control[data-orientation="vertical"] {
+    flex-direction: column;
+    width: 2rem;
+    height: 100%;
+  }
+
+  .gu-slider__track {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 0.5rem;
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+  }
+  .gu-slider__track[data-orientation="vertical"] {
+    width: 0.5rem;
+    height: 100%;
+  }
+
+  .gu-slider__indicator {
+    background: var(--gu-accent);
+  }
+
+  /* The thumb is a block of ink with a hard shadow: lifted when idle, pressed while dragged. */
+  .gu-slider__thumb {
+    box-sizing: border-box;
+    width: var(--gu-slider-thumb);
+    height: var(--gu-slider-thumb);
+    background: var(--gu-surface);
+    border: var(--gu-border-width) solid var(--gu-border);
+    border-radius: var(--gu-radius-sm);
+    box-shadow: var(--gu-shadow-sm);
+    cursor: grab;
+    transition:
+      box-shadow var(--gu-duration-fast) var(--gu-ease-stamp),
+      transform var(--gu-duration-fast) var(--gu-ease-stamp);
+  }
+  .gu-slider__thumb:has(:focus-visible) {
+    outline: var(--gu-focus-width) solid var(--gu-focus-ring);
+    outline-offset: var(--gu-focus-offset);
+  }
+  .gu-slider__thumb[data-dragging] {
+    cursor: grabbing;
+    background: var(--gu-accent);
+    box-shadow: var(--gu-shadow-pressed);
+  }
+
+  .gu-slider[data-disabled] {
+    color: var(--gu-ink-muted);
+  }
+  .gu-slider[data-disabled] .gu-slider__track {
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+  }
+  .gu-slider[data-disabled] .gu-slider__indicator {
+    background: var(--gu-ink-muted);
+  }
+  .gu-slider[data-disabled] .gu-slider__thumb {
+    background: var(--gu-tint);
+    border-color: var(--gu-ink-muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}

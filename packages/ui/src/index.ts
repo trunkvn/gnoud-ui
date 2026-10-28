@@ -92,6 +92,9 @@ export type { SeparatorProps } from "./components/separator/separator";
 export { Skeleton } from "./components/skeleton/skeleton";
 export type { SkeletonProps, SkeletonShape } from "./components/skeleton/skeleton";
 
+export { Slider } from "./components/slider/slider";
+export type { SliderProps } from "./components/slider/slider";
+
 export { Switch } from "./components/switch/switch";
 export type { SwitchProps } from "./components/switch/switch";
 
